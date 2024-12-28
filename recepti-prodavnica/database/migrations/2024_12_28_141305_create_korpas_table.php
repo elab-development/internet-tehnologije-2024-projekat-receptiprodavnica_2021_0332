@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stavke_kupovine', function (Blueprint $table) {
-            $table->id('idStavkeKupovine')->autoIncrement();
-            $table->integer('kolicina');
-            $table->decimal('cena', 10, 2);
-            $table->foreignId('idKupovine');
-            $table->foreignId('idProizvoda');
+        Schema::create('korpe', function (Blueprint $table) {
+            $table->id('idKorpe')->autoIncrement();
+            $table->dateTime('datumKreiranja');
+            $table->decimal('ukupnaCena', 10, 2);
+            $table->foreignId('idKorisnika');
             $table->timestamps();
-            
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stavka_kupovines');
+        Schema::dropIfExists('korpe');
     }
 };

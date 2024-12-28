@@ -16,6 +16,7 @@ return new class extends Migration
             $table->decimal('potrebnaKolicina', 8, 2);
             $table->foreignId('idRecepta');
             $table->foreignId('idProizvoda');
+            $table->timestamps();
         });
     }
 
