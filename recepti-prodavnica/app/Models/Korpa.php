@@ -9,6 +9,8 @@ class Korpa extends Model
 {
     /** @use HasFactory<\Database\Factories\KorpaFactory> */
     protected $primaryKey = 'idKorpe';
+    protected $table = 'korpe';
+    protected $fillable = ['datumKreiranja', 'ukupnaCena', 'idKorisnika'];
     use HasFactory;
     public function korpaStavka()  {
         return $this->hasMany(KorpaStavka :: class, 'idKorpe');

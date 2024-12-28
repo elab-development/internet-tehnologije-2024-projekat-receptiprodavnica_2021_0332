@@ -9,6 +9,8 @@ class StavkaKupovine extends Model
 {
     /** @use HasFactory<\Database\Factories\StavkaKupovineFactory> */
     protected $primaryKey = 'idStavkeKupovine';
+    protected $table = 'stavke_kupovine';
+    protected $fillable = ['kolicina', 'cena', 'idKupovine', 'idProizvoda'];
     use HasFactory;
     public function kupovina(){
         return $this->belongsTo(Kupovina::class, 'idKupovine');
