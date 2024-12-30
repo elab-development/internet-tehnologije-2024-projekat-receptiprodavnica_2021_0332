@@ -9,4 +9,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/proizvodi', [ProizvodController::class, 'store']);
+Route::put('/proizvodi/{idProizvoda}', [ProizvodController::class, 'update']);
+Route::delete('/proizvodi/{idProizvoda}', [ProizvodController::class, 'destroy']);
+Route::get('/proizvodi/pretraga', [ProizvodController::class, 'search']);
+
 
