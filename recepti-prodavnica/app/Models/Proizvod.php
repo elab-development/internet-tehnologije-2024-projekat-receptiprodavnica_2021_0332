@@ -13,7 +13,9 @@ class Proizvod extends Model
     protected $fillable = ['naziv', 'cena', 'mernaJedinica', 'kategorija'];
     use HasFactory;
     public function receptProizvod() {
-        return $this ->hasMany(ReceptProizvod :: class, 'idProizvoda');
+       // return $this ->hasMany(ReceptProizvod :: class, 'idProizvoda');
+       return $this->belongsToMany(Recept::class, 'recepti_proizvodi', 'idProizvoda', 'idRecepta')
+       ->withPivot('potrebnaKolicina');
     }
     public function stavkaKupovine()  {
         return $this ->hasMany(StavkaKupovine :: class, 'idProizvoda');
