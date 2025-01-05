@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProizvodController;
 use App\Http\Controllers\ReceptController;
 use App\Http\Controllers\KorpaController;
+use App\Http\Controllers\API\AuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+Route::post('/register', [AuthController::class, 'register']);
+
 
 Route::post('/proizvodi', [ProizvodController::class, 'store']);
 Route::put('/proizvodi/{idProizvoda}', [ProizvodController::class, 'update']);

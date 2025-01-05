@@ -54,6 +54,7 @@ class ProizvodController extends Controller
         try {
             // Pronaći proizvod po idProizvoda
             $proizvod = Proizvod::findOrFail($idProizvoda);
+        
 
             // Ažurirati proizvod sa novim podacima
             $proizvod->update([
