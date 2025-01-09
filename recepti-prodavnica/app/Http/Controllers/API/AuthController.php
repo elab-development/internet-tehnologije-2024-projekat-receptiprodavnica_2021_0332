@@ -62,4 +62,9 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
         ]);
     }
+
+    public function logout(){
+        auth()->korisnici()->tokens()->delete();
+        return response()->json(['message' => 'Uspešno ste se odjavili.']);
+    }
 }
