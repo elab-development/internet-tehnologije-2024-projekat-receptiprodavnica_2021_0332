@@ -12,22 +12,42 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
+// Rute za Admina
+Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->group(function () {
+    // CRUD operacije za proizvode
+    Route::post('/proizvodi', [ProizvodController::class, 'store']);
+    Route::put('/proizvodi/{idProizvoda}', [ProizvodController::class, 'update']);
+    Route::delete('/proizvodi/{idProizvoda}', [ProizvodController::class, 'destroy']);
+
+    // CRUD operacije za recepte
+    Route::post('/recepti', [ReceptController::class, 'store']);
+    Route::put('/recepti/{idRecepta}', [ReceptController::class, 'update']);
+    Route::delete('/recepti/{idRecepta}', [ReceptController::class, 'destroy']);
+});
 
 
 
-Route::post('/proizvodi', [ProizvodController::class, 'store']);
-Route::put('/proizvodi/{idProizvoda}', [ProizvodController::class, 'update']);
-Route::delete('/proizvodi/{idProizvoda}', [ProizvodController::class, 'destroy']);
-Route::get('/proizvodi/pretraga', [ProizvodController::class, 'search']);
+
+// Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::post('/logout', [AuthController::class, 'logout']);
 
 
-Route::post('/recepti', [ReceptController::class, 'store']);
-Route::put('/recepti/{idRecepta}', [ReceptController::class, 'update']);
-Route::delete('/recepti/{idRecepta}', [ReceptController::class, 'destroy']);
-Route::post('/pretraga-recepata', [ReceptController::class, 'searchByIngredients']);
 
 
-Route::get('/korpa', [KorpaController::class, 'pregledKorpe']); // Pregled trenutne korpe
-Route::put('/korpa/{idKorpe}/proizvod/{idProizvoda}', [KorpaController::class, 'dodajAzurirajStavku']);
-//Route::put('/korpa/{id}', [KorpaController::class, 'azurirajKorpu']); // Izmena korpe
-Route::post('/generisi-korpu/{idRecepta}', [KorpaController::class, 'generateCart']);
+// Route::post('/proizvodi', [ProizvodController::class, 'store']);
+// Route::put('/proizvodi/{idProizvoda}', [ProizvodController::class, 'update']);
+// Route::delete('/proizvodi/{idProizvoda}', [ProizvodController::class, 'destroy']);
+// Route::get('/proizvodi/pretraga', [ProizvodController::class, 'search']);
+
+
+// Route::post('/recepti', [ReceptController::class, 'store']);
+// Route::put('/recepti/{idRecepta}', [ReceptController::class, 'update']);
+// Route::delete('/recepti/{idRecepta}', [ReceptController::class, 'destroy']);
+// Route::post('/pretraga-recepata', [ReceptController::class, 'searchByIngredients']);
+
+
+// Route::get('/korpa', [KorpaController::class, 'pregledKorpe']); // Pregled trenutne korpe
+// Route::put('/korpa/{idKorpe}/proizvod/{idProizvoda}', [KorpaController::class, 'dodajAzurirajStavku']);
+// //Route::put('/korpa/{id}', [KorpaController::class, 'azurirajKorpu']); // Izmena korpe
+// Route::post('/generisi-korpu/{idRecepta}', [KorpaController::class, 'generateCart']);
