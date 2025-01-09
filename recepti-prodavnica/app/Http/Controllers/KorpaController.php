@@ -18,72 +18,87 @@ class KorpaController extends Controller
             return response()->json(['message' => 'Korpa je prazna!'], 404);
         }
 
-        return response()->json($korpa, 200);
+        return response()->json([
+            'korpa' => $korpa,
+            'stavke' => $korpa->korpaStavka,
+        ], 200);
     }
 
-    // 2. Dodavanje stavke u korpu
-    // public function dodajStavku(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'idProizvoda' => 'required|exists:proizvodi,id',
-    //         'kolicina' => 'required|integer|min:1',
-    //     ]);
+    
 
-    //     $korpa = Korpa::firstOrCreate(['idKorisnika' => auth()->id()]);
+    public function dodajAzurirajStavku(Request $request, $idProizvoda)
+{
+    $validated = $request->validate([
+        'kolicina' => 'required|integer|min:1',
+    ]);
 
-    //     $stavka = StavkaKorpe::updateOrCreate(
-    //         ['idKorpe' => $korpa->idKorpe, 'idProizvoda' => $validated['idProizvoda']],
-    //         ['kolicina' => $validated['kolicina']]
-    //     );
+    // Pronalaženje ili kreiranje korpe za korisnika
+    $korpa = Korpa::firstOrCreate(
+        ['idKorisnika' => auth()->id()],
+        ['datumKreiranja' => now(), 'ukupnaCena' => 0]
+    );
 
-    //     return response()->json(['message' => 'Proizvod je dodat u korpu!', 'stavka' => $stavka], 201);
-    // }
+    $proizvod = Proizvod::find($idProizvoda);
 
-    public function dodajAzurirajStavku(Request $request, $idKorpe, $idProizvoda)
-    {
-        // Validacija količine
-        $validated = $request->validate([
-            'kolicina' => 'required|integer|min:1',
-        ]);
-        
-        // Pronalaženje ili kreiranje stavke u korpi
-        $stavka = KorpaStavka::updateOrCreate(
-            ['idKorpe' => $idKorpe, 'idProizvoda' => $idProizvoda],
-            ['kolicina' => $request->input('kolicina')]
-        );
-        
-        // Vraćanje odgovora
-        return response()->json(['message' => 'Korpa je uspešno ažurirana!'], 200);
+    if (!$proizvod) {
+        return response()->json(['message' => 'Proizvod nije pronađen!'], 404);
     }
 
+    // Dodavanje ili ažuriranje stavke
+    $stavka = KorpaStavka::updateOrCreate(
+        ['idKorpe' => $korpa->idKorpe, 'idProizvoda' => $idProizvoda],
+        [
+            'kolicina' => $validated['kolicina'],
+            'cena' => $proizvod->cena * $validated['kolicina'],
+        ]
+    );
 
+    // Ažuriranje ukupne cene korpe
+    $ukupnaCena = KorpaStavka::where('idKorpe', $korpa->idKorpe)->sum('cena');
+    $korpa->update(['ukupnaCena' => $ukupnaCena]);
+
+    return response()->json(['message' => 'Korpa je uspešno ažurirana!', 'stavka' => $stavka], 200);
+}
+
+
+    // Generisanje korpe prema receptu
     public function generateCart($idRecepta, Request $request)
     {
-        // Pronađi recept na osnovu ID-a
-        $recept = Recept::with(['receptProizvod'])->find($idRecepta);
+        $recept = Recept::with('receptProizvod')->find($idRecepta);
 
         if (!$recept) {
             return response()->json(['error' => 'Recept nije pronađen.'], 404);
         }
 
-        // Kreiraj listu potrebnih sastojaka za recept
-        $sastojci = $recept->receptProizvod->map(function ($proizvod) {
-            return [
-                'idProizvoda' => $proizvod->idProizvoda,
-                'naziv' => $proizvod->naziv,
-                'potrebnaKolicina' => $proizvod->pivot->potrebnaKolicina,
-                'mernaJedinica' => $proizvod->mernaJedinica,
-            ];
-        });
+        // Dohvatanje trenutne korpe korisnika
+        $korpa = Korpa::firstOrCreate([
+            'idKorisnika' => auth()->id(),
+        ], [
+            'datumKreiranja' => now(),
+            'ukupnaCena' => 0,
+        ]);
 
-        if ($sastojci->isEmpty()) {
-            return response()->json(['error' => 'Nema sastojaka za generisanje korpe.'], 404);
+        // Kreiranje ili ažuriranje stavki u korpi na osnovu recepta
+        $stavke = [];
+        foreach ($recept->receptProizvod as $proizvod) {
+            $stavka = KorpaStavka::updateOrCreate(
+                ['idKorpe' => $korpa->idKorpe, 'idProizvoda' => $proizvod->idProizvoda],
+                [
+                    'kolicina' => $proizvod->pivot->potrebnaKolicina,
+                    'cena' => $proizvod->cena * $proizvod->pivot->potrebnaKolicina,
+                ]
+            );
+            $stavke[] = $stavka;
         }
 
-        // Prikaz liste korisniku sa opcijom potvrde
+        // Ažuriranje ukupne cene korpe
+        $ukupnaCena = KorpaStavka::where('idKorpe', $korpa->idKorpe)->sum('cena');
+        $korpa->update(['ukupnaCena' => $ukupnaCena]);
+
         return response()->json([
-            'message' => 'Lista sastojaka generisana.',
-            'sastojci' => $sastojci,
+            'message' => 'Korpa je generisana na osnovu recepta.',
+            'korpa' => $korpa,
+            'stavke' => $stavke,
         ], 200);
     }
 }
