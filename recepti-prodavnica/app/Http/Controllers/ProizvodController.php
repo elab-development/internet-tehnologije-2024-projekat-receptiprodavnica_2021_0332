@@ -124,9 +124,10 @@ public function search(Request $request)
         $query->where('cena', '=', $request->cena);
         }
 
-        // Izvrši pretragu
-        $proizvodi = $query->get();
+        $perPage = $validated['per_page'] ?? 10;
+        $proizvodi = $query->paginate($perPage);
 
+       
         if ($proizvodi->isEmpty()) {
             return response()->json([
                 'message' => 'Nema rezultata pretrage!',
