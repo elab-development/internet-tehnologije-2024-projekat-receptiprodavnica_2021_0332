@@ -88,7 +88,13 @@ class KorpaController extends Controller
                     'cena' => $proizvod->cena * $proizvod->pivot->potrebnaKolicina,
                 ]
             );
-            $stavke[] = $stavka;
+            $stavke[] = [
+                //'idKorpaStavka' => $stavka->idKorpaStavka,
+                //'idProizvoda' => $proizvod->idProizvoda,
+                'naziv' => $proizvod->naziv,
+                'kolicina' => $stavka->kolicina,
+                'cena' => $stavka->cena,
+            ];
         }
 
         // Ažuriranje ukupne cene korpe
