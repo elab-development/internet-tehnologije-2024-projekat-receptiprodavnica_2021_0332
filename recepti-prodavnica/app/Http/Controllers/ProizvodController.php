@@ -45,10 +45,10 @@ class ProizvodController extends Controller
     {
         // Validacija podataka
         $validated = $request->validate([
-            'naziv' => 'required|string|max:255',
-            'cena' => 'required|numeric|min:0',
-            'mernaJedinica'=> 'required|string|max:255',
-            'kategorija' => 'required|string|max:255',
+            'naziv' => 'nullable|string|max:255',
+            'cena' => 'nullable|numeric|min:0',
+            'mernaJedinica'=> 'nullable|string|max:255',
+            'kategorija' => 'nullable|string|max:255',
         ]);
 
         try {
@@ -57,12 +57,20 @@ class ProizvodController extends Controller
         
 
             // Ažurirati proizvod sa novim podacima
-            $proizvod->update([
-                'naziv' => $validated['naziv'],
-                'cena' => $validated['cena'],
-                'mernaJedinica' => $validated['mernaJedinica'],
-                'kategorija' => $validated['kategorija'],
-            ]);
+            // $proizvod->update([
+            //     'naziv' => $validated['naziv'],
+            //     'cena' => $validated['cena'],
+            //     'mernaJedinica' => $validated['mernaJedinica'],
+            //     'kategorija' => $validated['kategorija'],
+            // ]);
+            // Ažurirati samo prisutne atribute
+        $proizvod->fill($validated);
+
+        // Sačuvati promene
+        $proizvod->save();
+
+
+
 
             // Uspešan odgovor
             return response()->json([
@@ -106,6 +114,7 @@ public function search(Request $request)
         'naziv' => 'nullable|string|max:255',
         'kategorija' => 'nullable|string|max:255',
         'cena' => 'nullable|numeric|min:0',
+        'per_page' => 'nullable|integer|min:1', // Dodata opcija za broj rezultata po stranici
     ]);
 
     try {
@@ -124,10 +133,11 @@ public function search(Request $request)
         $query->where('cena', '=', $request->cena);
         }
 
-        $perPage = $validated['per_page'] ?? 10;
+         $perPage = $validated['per_page'] ?? 10;
         $proizvodi = $query->paginate($perPage);
 
        
+
         if ($proizvodi->isEmpty()) {
             return response()->json([
                 'message' => 'Nema rezultata pretrage!',
