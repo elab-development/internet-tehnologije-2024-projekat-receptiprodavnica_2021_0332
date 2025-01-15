@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\Proizvod;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProizvodFactory extends Factory
 {
+    protected $model = Proizvod::class;
     /**
      * Define the model's default state.
      *
