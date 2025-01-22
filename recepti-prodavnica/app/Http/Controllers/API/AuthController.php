@@ -15,7 +15,6 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),[
         'korisnickoIme'=>'required|string|max:255|unique:korisnici',
         'lozinka'=>'required|string|min:8',
-        'tipKorisnika'=>'required|string|in:admin,registrovani,anonimni',
     ]);
 
     if($validator->fails()){
@@ -24,11 +23,11 @@ class AuthController extends Controller
     $user = Korisnik::create([
         'korisnickoIme'=>$request->korisnickoIme,
         'lozinka'=>Hash::make($request->lozinka),
-        'tipKorisnika'=>$request->tipKorisnika,
+        'tipKorisnika'=>'registrovani'
        
     ]);
     $token = $user->createToken('auth_token')->plainTextToken;
-    return response()->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
+    return response()->json(['message' => 'Uspešno ste se registrovali.','data' => $user, 'access_token' => $token, 'token_type' => 'Bearer', ]);
 
 
 
@@ -50,13 +49,13 @@ class AuthController extends Controller
         $user = Korisnik::where('korisnickoIme', $request->korisnickoIme)->first();
 
         if (!$user || !Hash::check($request->lozinka, $user->lozinka)) {
-            return response()->json(['error' => 'Neispravno korisničko ime ili lozinka.'], 401);
+            return response()->json(['success' => false,'error' => 'Neispravno korisničko ime ili lozinka.', 401]);
         }
 
         // Generišemo token
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
+        return response()->json(['success' => true,
             'message' => 'Uspešno ste se prijavili.',
             'access_token' => $token,
             'token_type' => 'Bearer',
