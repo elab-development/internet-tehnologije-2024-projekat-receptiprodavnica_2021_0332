@@ -28,8 +28,8 @@ const LoginPage = () => {
     <h1 className="login-title">Dobrodošli u našu prodavnicu</h1>
     <p className="login-subtitle">Prijavite se kako biste istražili recepte i namirnice</p>
     <form onSubmit = {handleLogin}>
-        <div  className="login-form">
 
+    <div  className="login-form">
       <input 
         type="text" 
         placeholder="Korisničko ime" 

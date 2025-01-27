@@ -15,7 +15,7 @@ const HomePage = () => {
       </header>
 
       <section className="popular-products">
-        <h2 className="section-title">Popular Products</h2>
+        <h2 className="section-title">POPULARNI RECEPTI</h2>
         <div className="products-list">
           {popularProducts.map(product => (
             <div className="product-card" key={product.id}>

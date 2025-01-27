@@ -1,6 +1,6 @@
 /* Postavljanje globalnog stila za boje */
 :root {
-  --bordo: #bfa7a0;
+  --bordo: #835151;
   --bebi-roze: #f5c4d4;
   --siva: #4e4e4e;
   --bela: #ffffff;
@@ -11,16 +11,16 @@
 /* Generalni stilovi za telo stranice */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: var(--tamna-siva); /* Tamnija pozadina */
+  background-color: var(--bordo); /* Tamnija pozadina */
   margin: 0;
   padding: 0;
 }
 
 /* Pocetna stranica (HomePage) */
 .home-container {
-  background-color: #e1d5d1; /* Tamnija svetla pozadina */
+  background-color: #835151;
   color: var(--siva);
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 /* Naslov aplikacije */
@@ -33,7 +33,7 @@ body {
 }
 
 .app-title {
-  font-size: 4rem;
+  font-size: 100px;
   font-weight: bold;
   color: var(--bebi-roze); /* Bebi roze */
   text-align: center;
@@ -41,6 +41,7 @@ body {
 
 /* Sekcija sa popularnim proizvodima */
 .popular-products {
+  background-color: #f5c4d4;
   margin-top: 40px;
   padding: 20px;
 }
@@ -88,7 +89,7 @@ body {
 .login-container, .register-container {
   max-width: 400px;
   margin: 50px auto;
-  background-color: #ffffff;
+  background-color: var(--bebi-roze);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -106,6 +107,30 @@ body {
   font-size: 14px;
   color: var(--siva);
   margin-bottom: 20px;
+}
+
+.register-prompt, .register-prompt{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: var(--siva);
+}
+
+.register-link, .register-link{
+  color: var(--bordo);
+}
+.register-link:hover{
+  color: var(--siva);
+}
+
+.login-input, .register-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: var(--siva); /* Siva boja za unos */
+  font-size: 16px;
 }
 
 .login-button, .register-button {
@@ -137,7 +162,7 @@ body {
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
   color: var(--bebi-roze); /* Bebi roze za logo */
 }
@@ -234,4 +259,70 @@ body {
   .dropdown-submenu:hover .submenu-content {
     display: block;
   }
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Skriveno van ekrana */
+  width: 400px;
+  height: 100%;
+  background-color: var(--bordo);
+  color: var(--bebi-roze);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  transition: left 0.3s ease;
+}
+
+.sidebar.open {
+  left: 0; /* Vidljivo */
+}
+
+.sidebar .close-btn {
+  position: absolute; /* Pozicioniranje u odnosu na roditeljski element */
+  top: 5px; /* Udaljenost od vrha */
+  right: 10px; /* Udaljenost od desne strane */
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--bebi-roze);
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: var(--tamna-siva); /* Bordo boja na hover */
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 20px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: var(--bebi-roze);
+  font-size: 28px;
+}
+
+.sidebar ul li a:hover {
+  color: var(--tamna-siva);
+}
+.sidebar h3 {
+  margin-top: 30px; /* Dodaje razmak sa vrha, čineći h3 nižim */
+  font-size: 35px;  /* Povećava veličinu fonta za h3 */
+}
+.sidebar button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: var(--bebi-roze);
+  cursor: pointer;
+  text-align: left;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.sidebar button:hover {
+  color: var(--tamna-siva); /* Bordo boja na hover */
 }
