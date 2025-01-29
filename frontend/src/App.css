@@ -1,6 +1,6 @@
 /* Postavljanje globalnog stila za boje */
 :root {
-  --bordo: #835151;
+  --bordo: #5B2E35;
   --bebi-roze: #f5c4d4;
   --siva: #4e4e4e;
   --bela: #ffffff;
@@ -18,7 +18,7 @@ body {
 
 /* Pocetna stranica (HomePage) */
 .home-container {
-  background-color: #835151;
+  background-color: var(--bordo);
   color: var(--siva);
   /* padding: 20px; */
 }
@@ -39,8 +39,8 @@ body {
   text-align: center;
 }
 
-/* Sekcija sa popularnim proizvodima */
-.popular-products {
+/* Sekcija sa popularnim receptima */
+.popular-recipes {
   background-color: #f5c4d4;
   margin-top: 40px;
   padding: 20px;
@@ -52,13 +52,13 @@ body {
   margin-bottom: 20px;
 }
 
-.products-list {
+.recipes-list {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
-.product-card {
+.recipe-card {
   background-color: var(--bela);
   padding: 15px;
   margin: 10px;
@@ -67,22 +67,39 @@ body {
   width: 200px;
   text-align: center;
   transition: background-color 0.3s ease;
+  display: flex;        
+  flex-direction: column; 
+  justify-content: space-between; 
+  height: 300px; 
 }
 
 /* Hover efekat na kartici */
-.product-card:hover {
+.recipe-card:hover {
   background-color: var(--tamna-bordo); /* Tamnija bordo boja na hover */
   color: var(--bebi-roze); /* Tekst u bebi roze pri hoveru */
 }
 
-.product-name {
+.recipe-name {
   font-size: 1.2rem;
   margin: 10px 0;
 }
 
-.product-price {
-  font-size: 1rem;
-  color: var(--bordo);
+.recipe-image {
+  width: 100%;        /* Slika će zauzeti širinu kartice */
+  height: 150px;      /* Fiksna visina da slike budu jednake */
+  object-fit: cover;  /* Održava proporcije i iseče višak da ispuni okvir */
+  border-radius: 6px; /* Zaobljeni uglovi da se uklopi sa dizajnom kartice */
+}
+
+.details-button{
+  background-color: var(--bebi-roze);
+  color: var(--siva);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: auto; 
 }
 
 /* Postavljanje postojećih stilova za login i registraciju */
@@ -266,8 +283,8 @@ body {
   left: -300px; /* Skriveno van ekrana */
   width: 400px;
   height: 100%;
-  background-color: var(--bordo);
-  color: var(--bebi-roze);
+  background-color: var(--bebi-roze);
+  color: var(--bordo);
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   padding: 20px;
   transition: left 0.3s ease;
@@ -280,13 +297,24 @@ body {
 .sidebar .close-btn {
   position: absolute; /* Pozicioniranje u odnosu na roditeljski element */
   top: 5px; /* Udaljenost od vrha */
-  right: 10px; /* Udaljenost od desne strane */
+  left: 350px; /* Udaljenost od desne strane */
   background: none;
   border: none;
   font-size: 24px;
-  color: var(--bebi-roze);
+  color: var(--bordo);
   cursor: pointer;
 }
+.back-btn{
+  position: absolute; /* Pozicioniranje u odnosu na roditeljski element */
+  top: 5px; /* Udaljenost od vrha */
+  left: 20px; /* Udaljenost od leve strane */
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--bordo);
+  cursor: pointer;
+}
+
 .close-btn:hover {
   color: var(--tamna-siva); /* Bordo boja na hover */
 }
@@ -301,7 +329,7 @@ body {
 
 .sidebar ul li a {
   text-decoration: none;
-  color: var(--bebi-roze);
+  color: var(--bordo);
   font-size: 28px;
 }
 
@@ -309,6 +337,7 @@ body {
   color: var(--tamna-siva);
 }
 .sidebar h3 {
+  color: var(--bordo);
   margin-top: 30px; /* Dodaje razmak sa vrha, čineći h3 nižim */
   font-size: 35px;  /* Povećava veličinu fonta za h3 */
 }
@@ -316,7 +345,7 @@ body {
   background: none;
   border: none;
   font-size: 28px;
-  color: var(--bebi-roze);
+  color: var(--bordo);
   cursor: pointer;
   text-align: left;
   padding: 10px 0;

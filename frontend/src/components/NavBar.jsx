@@ -66,27 +66,23 @@ return (
             <Link to="/moji-sastojci">Moji sastojci</Link>
         </li>
         <li className="dropdown">
-                      <button
-                        className="dropdown-button"
-                        onClick={() => toggleSidebar("recipes")}
-                      >
-                        Recepti
-                      </button>
-                    </li>
-                    <li className="dropdown">
-                      <button
-                        className="dropdown-button"
-                        onClick={() => toggleSidebar("products")}
-                      >
-                        Proizvodi
-                      </button>
-                    </li>
-                    <li>
-                      <Link to="/cart">Korpa</Link>
-                    </li>
-                    <li>
-                      <Link to="/login">Login</Link>
-                    </li>
+            <button
+              className="dropdown-button"
+              onClick={() => toggleSidebar("recipes")}
+            >Recepti</button>
+        </li>
+        <li className="dropdown">
+            <button
+              className="dropdown-button"
+              onClick={() => toggleSidebar("products")}
+            >Proizvodi</button>
+        </li>
+        <li>
+            <Link to="/cart">Korpa</Link>
+        </li>
+        <li>
+            <Link to="/login">Login</Link>
+        </li>
                   </ul>
                 </nav>
                 {/* Bočni meni */}
@@ -120,7 +116,6 @@ return (
                     {/* Kategorije recepata */}
                     {currentMenu === "recipes" && (
                       <>
-                        <h3>Kategorije recepata</h3>
                         <ul>
                           <li>
                             <button onClick={() => setCurrentMenu("kategorija-jela")}>
@@ -169,8 +164,65 @@ return (
                         </ul>
                       </>
                     )}
+          {/* Podkategorije za "Tip jela" */}
           
-                    {/* Ostale podkategorije se mogu dodati na sličan način */}
+          {currentMenu === "tip-jela" && (
+                      <>
+                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
+                          ←
+                        </button>
+                        <h3>Tip jela</h3>
+                        <ul>
+                          <li>
+                            <Link to="/recepti/predjelo">Predjelo</Link>
+                          </li>
+                          <li>
+                            <Link to="/recepti/glavno-jelo">Glavno jelo</Link>
+                          </li>
+                          <li>
+                            <Link to="/recepti/desert">Desert</Link>
+                          </li>
+                        </ul>
+                      </>
+                    )}
+                    {currentMenu === "vreme-pripreme" && (
+                      <>
+                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
+                          ←
+                        </button>
+                        <h3>Vreme pripreme</h3>
+                        <ul>
+                          <li>
+                            <Link to="/recepti/30">Do 30 minuta</Link>
+                          </li>
+                          <li>
+                            <Link to="/recepti/30-60">Između 30 i 60 minuta</Link>
+                          </li>
+                          <li>
+                            <Link to="/recepti/60">Preko 60 minuta</Link>
+                          </li>
+                        </ul>
+                      </>
+                    )}
+                    {currentMenu === "broj-kalorija" && (
+                      <>
+                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
+                          ←
+                        </button>
+                        <h3>Broj kalorija</h3>
+                        <ul>
+                          <li>
+                            <Link to="/recepti/niskokaloricni">Niskokalorični</Link>
+                          </li>
+                          <li>
+                            <Link to="/recepti/srednjekaloricni">Srednjekalorični</Link>
+                          </li>
+                          <li>
+                            <Link to="/recepti/visokokaloricni">Visokokalorični</Link>
+                          </li>
+                        </ul>
+                      </>
+                    )}
                   </div>
                 )}
               </>

@@ -1,9 +1,11 @@
 import{useState} from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; //za preusmeravanje na HomePage pri registraciji
 
 
 const RegisterPage = () => {
     const [userData, setUserData] = useState({korisnickoIme:"", lozinka:""});
+    const navigate = useNavigate();
     function handleInput (e){
         let newUserData = userData;
         newUserData[e.target.name] = e.target.value;
@@ -14,6 +16,7 @@ const RegisterPage = () => {
       e.preventDefault();
         axios.post(
           "http://127.0.0.1:8000/api/register", userData).then((res)=>{console.log(res.data);
+            navigate("/");
           })
           .catch((e)=>{console.log(e);
           });
