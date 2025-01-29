@@ -21,6 +21,9 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->
     Route::delete('/proizvodi/{idProizvoda}', [ProizvodController::class, 'destroy']);
 
     // CRUD operacije za recepte
+
+    Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
+    Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
     Route::post('/recepti', [ReceptController::class, 'store']);
     Route::put('/recepti/{idRecepta}', [ReceptController::class, 'update']);
     Route::delete('/recepti/{idRecepta}', [ReceptController::class, 'destroy']);

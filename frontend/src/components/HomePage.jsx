@@ -41,7 +41,7 @@ const HomePage = () => {
               <img src={recipe.image} alt={recipe.name} className="recipe-image" />
               <h3 className="recipe-name">{recipe.name}</h3>
               <p className="recipe-description">{recipe.description}</p>
-              <button className="details-button" onClick={() => navigate(`/recipe/${recipe.id}`)}>
+              <button className="details-button" onClick={() => navigate(`/recepti/${recipe.id}`)}>
                 Vidi detalje
               </button>
             </div>

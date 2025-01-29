@@ -10,6 +10,33 @@ use Illuminate\Support\Facades\Validator;
 
 class ReceptController extends Controller
 {
+    public function index()
+{
+    try {
+        $recepti = Recept::with('receptProizvod')->get();
+        return response()->json($recepti, 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Greška prilikom preuzimanja recepata.',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
+
+    public function show($idRecepta)
+{
+    try {
+        $recept = Recept::with('receptProizvod')->findOrFail($idRecepta);
+
+        return response()->json($recept, 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Recept nije pronađen.',
+            'error' => $e->getMessage(),
+        ], 404);
+    }
+}
     public function store(Request $request)
 {
     // Validacija podataka
