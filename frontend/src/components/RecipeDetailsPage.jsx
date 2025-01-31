@@ -51,7 +51,7 @@ const RecipeDetailsPage = () => {
         <p><strong>Broj porcija:</strong> {recipe.brojPorcija}</p>
       </div>
       </div>
-      <button className="back-btn" onClick={handleBack}>Povratak</button>
+      <button className="back-btn-details" onClick={handleBack}>Povratak</button>
     </div>
   );
 };

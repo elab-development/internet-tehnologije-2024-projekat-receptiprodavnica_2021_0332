@@ -428,7 +428,7 @@ body {
 } 
 
 /* Dugme za povratak */
-.back-btn {
+.back-btn-details {
   background-color: var(--bordo);
   color: var(--bebi-roze);
   border: none;
@@ -445,7 +445,7 @@ body {
   /* display: inline-block;  */
 } 
 
-.back-btn:hover {
+.back-btn-details:hover {
   background-color: var(--tamna-bordo);
   color: var(--siva);
 }
