@@ -21,9 +21,6 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->
     Route::delete('/proizvodi/{idProizvoda}', [ProizvodController::class, 'destroy']);
 
     // CRUD operacije za recepte
-
-    Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
-    Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
     Route::post('/recepti', [ReceptController::class, 'store']);
     Route::put('/recepti/{idRecepta}', [ReceptController::class, 'update']);
     Route::delete('/recepti/{idRecepta}', [ReceptController::class, 'destroy']);
@@ -39,13 +36,16 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:registrova
     // Ruta za generisanje korpe prema receptu
     Route::post('/korpa/recept/{idRecepta}', [KorpaController::class, 'generateCart']);
     Route::post('/kupovina/potvrdi', [KupovinaController::class, 'potvrdiKupovinu']);
-
+    
 });
 
 // Rute za sve korisnike (ukljucujuci anonimne)
 
 Route::get('/proizvodi/pretraga', [ProizvodController::class, 'search']);
 Route::post('/pretraga-recepata', [ReceptController::class, 'searchByIngredients']);
+
+    Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
+    Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
 
 
 

@@ -355,3 +355,114 @@ body {
 .sidebar button:hover {
   color: var(--tamna-siva); /* Bordo boja na hover */
 }
+
+
+/* Recept detalji stranica */
+  .recipe-details-container {
+  background-color: var(--bebi-roze);
+  color: var(--bordo);
+  padding: 40px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}  
+.recipe-details-container h1{
+  margin-bottom : 30px;
+}
+
+/* Glavni kontejner za sliku i sadržaj */
+.recipe-content-wrapper {
+  display: flex;
+  align-items: flex-start; /* Poravnava vrh slike i sadržaja */
+  gap: 40px; /* Razmak između slike i sadržaja */
+  max-width: 1100px;
+  width: 100%;
+}
+
+
+/* Slika recepta */
+.recipe-image-container {
+   /* display: flex; 
+  justify-content: left;
+  margin-bottom: 30px; */
+
+  flex-shrink: 0; /* Da se slika ne skuplja */
+  width: 40%;
+}
+
+.recipe-image-details{
+  /* width: 100%;
+  max-width: 450px; */
+  width: 400px;  /* Fiksna širina */
+  height: 430px; /* Fiksna visina */
+  /* object-fit: cover; */
+ 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+ .recipe-content {
+   flex: 1; /* Da popuni preostali prostor */
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--siva);
+
+}
+
+.recipe-content h3 {
+  font-size: 1.6rem;
+  color: var(--bordo);
+  margin-top: 5px;
+} 
+
+.recipe-content ul {
+  list-style-type: square;
+  margin-left: 20px;
+  padding: 0;
+}
+
+.recipe-content li {
+  margin: 10px 0;
+} 
+
+/* Dugme za povratak */
+.back-btn {
+  background-color: var(--bordo);
+  color: var(--bebi-roze);
+  border: none;
+  top: 50px;
+  left: 10px;
+  /* padding: 12px 20px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+  text-align: center; 
+  /* display: inline-block;  */
+} 
+
+.back-btn:hover {
+  background-color: var(--tamna-bordo);
+  color: var(--siva);
+}
+
+/* Recept - Loading / Error stanje */
+ .loading,
+.error {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--siva);
+}
+
+.loading {
+  margin-top: 50px;
+}
+
+.error {
+  color: var(--tamna-siva);
+  margin-top: 50px;
+} 

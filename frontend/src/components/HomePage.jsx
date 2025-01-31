@@ -9,17 +9,17 @@ const HomePage = () => {
       image: "/images/Chicken-alfredo.jpg"
     },
     { 
-      id: 2, 
+      id: 89, 
       name: "Grčka salata", 
       image: "/images/Grcka-salata.jpeg", 
     },
     { 
-      id: 3, 
+      id: 90, 
       name: "Biftek sa maslacem od belog luka", 
       image: "/images/Garlic-butter-steak.jpg",
     },
     { 
-      id: 4, 
+      id: 91, 
       name: "Čokoladni sufle", 
       image: "/images/Souffle.jpg", 
     }
@@ -41,9 +41,15 @@ const HomePage = () => {
               <img src={recipe.image} alt={recipe.name} className="recipe-image" />
               <h3 className="recipe-name">{recipe.name}</h3>
               <p className="recipe-description">{recipe.description}</p>
-              <button className="details-button" onClick={() => navigate(`/recepti/${recipe.id}`)}>
-                Vidi detalje
-              </button>
+              <button
+              className="details-button"
+              onClick={() => {
+              // Proverite sliku pre nego što je pošaljete
+              navigate(`/recepti/${recipe.id}`, { state: { imageUrl: recipe.image } });
+               }}
+>
+  Vidi detalje
+</button>
             </div>
           ))}
         </div>
