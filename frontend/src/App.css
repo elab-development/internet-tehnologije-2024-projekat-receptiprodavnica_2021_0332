@@ -359,6 +359,7 @@ body {
 
 /* Recept detalji stranica */
   .recipe-details-container {
+    position: relative;
   background-color: var(--bebi-roze);
   color: var(--bordo);
   padding: 40px;
@@ -429,20 +430,17 @@ body {
 
 /* Dugme za povratak */
 .back-btn-details {
+  position: absolute; /* Omogućava precizno pozicioniranje */
+  top: 10px; /* Razmak od vrha */
+  left: 10px; /* Razmak od leve ivice */
   background-color: var(--bordo);
   color: var(--bebi-roze);
   border: none;
-  top: 50px;
-  left: 10px;
-  /* padding: 12px 20px; */
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.2rem;
-  margin-top: 20px;
-  align-self: flex-start;
+  /* padding: 10px 15px; */
   transition: background-color 0.3s ease;
-  text-align: center; 
-  /* display: inline-block;  */
 } 
 
 .back-btn-details:hover {
