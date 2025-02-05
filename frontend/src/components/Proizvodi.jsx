@@ -34,15 +34,15 @@ const Proizvodi = () => {
       ) : (
         <div className="proizvodi-list">
           {proizvodi.map(proizvod => (
-            <div className="proizvodi-card" key={proizvod.id}>
+            <div className="proizvodi-card" key={proizvod.idProizvoda}>
               <img src={proizvod.slika} alt={proizvod.naziv} className="proizvodi-image" />
               <h3 className="proizvodi-name">{proizvod.naziv}</h3>
-              <p className="proizvodi-description">Cena: {proizvod.cena} RSD</p>
+              <p className="proizvodi-description">{proizvod.cena} RSD/{proizvod.mernaJedinica}</p>
               <button
                 className="buy-button"
                 /*onClick={() => kupiProizvod(proizvod.id)}*/
               >
-                Kupi
+                Dodaj u korpu
               </button>
             </div>
           ))}

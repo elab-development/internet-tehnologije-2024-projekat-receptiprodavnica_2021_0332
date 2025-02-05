@@ -10,7 +10,7 @@ class Proizvod extends Model
     /** @use HasFactory<\Database\Factories\ProizvodFactory> */
     protected $primaryKey = 'idProizvoda';
     protected $table = 'proizvodi';
-    protected $fillable = ['naziv', 'cena', 'mernaJedinica', 'kategorija'];
+    protected $fillable = ['naziv', 'cena', 'mernaJedinica', 'kategorija', 'slika'];
     use HasFactory;
     public function receptProizvod() {
        // return $this ->hasMany(ReceptProizvod :: class, 'idProizvoda');
@@ -25,5 +25,7 @@ class Proizvod extends Model
         return $this ->hasMany(KorpaStavka :: class, 'idProizvoda');
         
     }
+   
+
 
 }

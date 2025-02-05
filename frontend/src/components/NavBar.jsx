@@ -42,6 +42,11 @@ const NavBar = () => {
     setIsSidebarOpen(false); // Zatvori sidebar
   };
 
+  const handleCategoryClick = (kategorija) => {
+    navigate(`/proizvodi?kategorija=${kategorija}`);  // Navigacija do odgovarajuće kategorije
+    setIsSidebarOpen(false);  // Zatvori sidebar nakon što se odabere kategorija
+  };
+
 return (
 <>
   <nav className="navbar">
@@ -86,16 +91,22 @@ return (
                         <h3>Kategorije proizvoda</h3>
                         <ul>
                           <li>
-                          <button onClick={() => navigate("/proizvodi?kategorija=voce")}>Voće</button>
+                          <button onClick={() => handleCategoryClick("voce")}>Voće</button>
                           </li>
                           <li>
-                          <button onClick={() => navigate("/proizvodi?kategorija=mlecni-proizvodi")}>Mlečni proizvodi</button>
+                          <button onClick={() =>  handleCategoryClick("mlecni-proizvodi")}>Mlečni proizvodi</button>
                           </li>
                           <li>
-                          <button onClick={() => navigate("/proizvodi?kategorija=meso")}>Meso</button>
+                          <button onClick={() =>  handleCategoryClick("meso")}>Meso</button>
                           </li>
                           <li>
-                          <button onClick={() => navigate("/proizvodi?kategorija=povrce")}>Povrće</button>
+                          <button onClick={() =>  handleCategoryClick("povrce")}>Povrće</button>
+                          </li>
+                          <li>
+                          <button onClick={() =>  handleCategoryClick("zitarice")}>Žitarice</button>
+                          </li>
+                          <li>
+                          <button onClick={() =>  handleCategoryClick("testenina")}>Testenina</button>
                           </li>
                         </ul>
                       </>

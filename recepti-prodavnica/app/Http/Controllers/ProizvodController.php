@@ -27,6 +27,8 @@ class ProizvodController extends Controller
                 'cena' => $validated['cena'],
                 'mernaJedinica' =>$validated['mernaJedinica'],
                 'kategorija' =>$validated['kategorija'],
+                'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
             ]);
 
             return response()->json([
@@ -49,6 +51,7 @@ class ProizvodController extends Controller
             'cena' => 'nullable|numeric|min:0',
             'mernaJedinica'=> 'nullable|string|max:255',
             'kategorija' => 'nullable|string|max:255',
+            'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try {
@@ -133,6 +136,8 @@ public function search(Request $request)
         $query->where('cena', '=', $request->cena);
         }
 
+        $query->select('idProizvoda', 'naziv', 'cena', 'mernaJedinica', 'kategorija', 'slika');
+
          $perPage = $validated['per_page'] ?? 10;
         $proizvodi = $query->paginate($perPage);
 
@@ -143,6 +148,12 @@ public function search(Request $request)
                 'message' => 'Nema rezultata pretrage!',
             ], 404);
         }
+        
+        $proizvodi->getCollection()->transform(function ($proizvod) {
+            $proizvod->slika = asset('storage/' . $proizvod->slika); // Pretvaranje putanje u pun URL
+            return $proizvod;
+        });
+
 
         return response()->json([
             'proizvodi' => $proizvodi,
