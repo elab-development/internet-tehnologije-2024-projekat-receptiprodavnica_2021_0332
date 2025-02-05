@@ -45,20 +45,30 @@ body {
   margin-top: 40px;
   padding: 20px;
 }
+.proizvodi-section{
+  background-color: var(--bordo);
+ 
+}
 
 .section-title {
   font-size: 2rem;
   text-align: center;
   margin-bottom: 20px;
 }
+.proizvodi-title{
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--bebi-roze);
+}
 
-.recipes-list {
+.recipes-list, .proizvodi-list {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
-.recipe-card {
+.recipe-card, .proizvodi-card {
   background-color: var(--bela);
   padding: 15px;
   margin: 10px;
@@ -74,24 +84,24 @@ body {
 }
 
 /* Hover efekat na kartici */
-.recipe-card:hover {
+.recipe-card:hover, .proizvodi-card:hover {
   background-color: var(--tamna-bordo); /* Tamnija bordo boja na hover */
   color: var(--bebi-roze); /* Tekst u bebi roze pri hoveru */
 }
 
-.recipe-name {
+.recipe-name, .proizvodi-name {
   font-size: 1.2rem;
   margin: 10px 0;
 }
 
-.recipe-image {
+.recipe-image, .proizvodi-image {
   width: 100%;        /* Slika će zauzeti širinu kartice */
   height: 150px;      /* Fiksna visina da slike budu jednake */
   object-fit: cover;  /* Održava proporcije i iseče višak da ispuni okvir */
   border-radius: 6px; /* Zaobljeni uglovi da se uklopi sa dizajnom kartice */
 }
 
-.details-button{
+.details-button, .buy-button{
   background-color: var(--bebi-roze);
   color: var(--siva);
   border: none;

@@ -1,9 +1,32 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+
+
 const NavBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isRecipesOpen, setIsRecipesOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState(""); // Praćenje trenutnog menija
+  const [proizvodi, setProizvodi] = useState([]);
+  const [greska, setGreska] = useState("");
+  const navigate = useNavigate();
+
+  const fetchProizvodi = async (kategorija) => {
+    try {
+      const response = await fetch(`/proizvodi/pretraga?kategorija=${kategorija}`);
+      if (!response.ok) {
+        throw new Error("Nema proizvoda u ovoj kategoriji!");
+      }
+      const data = await response.json();
+      setProizvodi(data.proizvodi.data); // Laravel vraća paginirane podatke unutar `data`
+      setGreska(""); // Resetujemo grešku ako je bila prethodno
+    } catch (error) {
+      setProizvodi([]); // Ako nema rezultata, praznimo listu
+      setGreska(error.message);
+    }
+  };
+
 
   const toggleSidebar = (menu = "") => {
     if (isSidebarOpen && currentMenu === menu) {
@@ -19,41 +42,6 @@ const NavBar = () => {
     setIsSidebarOpen(false); // Zatvori sidebar
   };
 
-             {/* <div className="dropdown-content">
-              <div className="dropdown-submenu">
-                <button className="submenu-button">Kategorija jela</button>
-                <div className="submenu-content">
-                  <Link to="/recepti/slatko">Slatko</Link>
-                  <Link to="/recepti/slano">Slano</Link>
-                  <Link to="/recepti/posno">Posno</Link>
-                  <Link to="/recepti/vegansko">Vegansko</Link>
-                </div>
-              </div>
-              <div className="dropdown-submenu">
-                <button className="submenu-button">Tip jela</button>
-                <div className="submenu-content">
-                  <Link to="/recepti/predjelo">Predjelo</Link>
-                  <Link to="/recepti/glavno-jelo">Glavno jelo</Link>
-                  <Link to="/recepti/desert">Desert</Link>
-                </div>
-              </div>
-              <div className="dropdown-submenu">
-                <button className="submenu-button">Vreme pripreme</button>
-                <div className="submenu-content">
-                  <Link to="/recepti/brzi">Brzi</Link>
-                  <Link to="/recepti/srednje-brzi">Srednje brzi</Link>
-                  <Link to="/recepti/dugi">Dugi</Link>
-                </div>
-              </div>
-              <div className="dropdown-submenu">
-                <button className="submenu-button">Broj kalorija</button>
-                <div className="submenu-content">
-                  <Link to="/recepti/niskokalorično">Niskokalorično</Link>
-                  <Link to="/recepti/srednjekalorično">Srednjekalorično</Link>
-                  <Link to="/recepti/visokokalorično">Visokokalorično</Link>
-                </div>
-              </div>
-            </div> */}
 return (
 <>
   <nav className="navbar">
@@ -98,16 +86,16 @@ return (
                         <h3>Kategorije proizvoda</h3>
                         <ul>
                           <li>
-                            <Link to="/proizvodi/voce">Voće</Link>
+                          <button onClick={() => navigate("/proizvodi?kategorija=voce")}>Voće</button>
                           </li>
                           <li>
-                            <Link to="/proizvodi/mlecni-proizvodi">Mlečni proizvodi</Link>
+                          <button onClick={() => navigate("/proizvodi?kategorija=mlecni-proizvodi")}>Mlečni proizvodi</button>
                           </li>
                           <li>
-                            <Link to="/proizvodi/meso">Meso</Link>
+                          <button onClick={() => navigate("/proizvodi?kategorija=meso")}>Meso</button>
                           </li>
                           <li>
-                            <Link to="/proizvodi/povrce">Povrće</Link>
+                          <button onClick={() => navigate("/proizvodi?kategorija=povrce")}>Povrće</button>
                           </li>
                         </ul>
                       </>
