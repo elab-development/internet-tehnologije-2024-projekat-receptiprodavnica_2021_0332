@@ -34,7 +34,7 @@ const HomePage = () => {
       </header>
 
       <section className="popular-recipes">
-        <h2 className="section-title">POPULARNI RECEPTI</h2>
+        <h2 className="section-title">POPULARNI RECEPTII</h2>
         <div className="recipes-list">
           {popularRecipes.map(recipe => (
             <div className="recipe-card" key={recipe.id}>

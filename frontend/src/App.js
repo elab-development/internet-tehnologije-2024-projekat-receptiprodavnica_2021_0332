@@ -13,7 +13,7 @@ import Proizvodi from './components/Proizvodi';
 function App() {
   return (
     <BrowserRouter className="App">
-      <NavBar /> {/* Navigacioni bar */}
+      <NavBar /> {/* Navigacioni barrr*/}
       <Routes>
       <Route path="/" element={<HomePage />} /> 
       <Route path="/recepti/:id" element={<RecipeDetailsPage />} />
