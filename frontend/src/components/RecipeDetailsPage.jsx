@@ -33,7 +33,7 @@ const RecipeDetailsPage = () => {
     navigate("/"); // Vraća korisnika na početnu stranu (ili drugu stranicu po vašoj želji)
   };
 
-  if (loading) return <p>Učitavanje recepta...</p>;
+  if (loading) return <p className="loading-text">Učitavanje recepta...</p>;
   if (error) return <p>Greška: {error}</p>;
 
   return (

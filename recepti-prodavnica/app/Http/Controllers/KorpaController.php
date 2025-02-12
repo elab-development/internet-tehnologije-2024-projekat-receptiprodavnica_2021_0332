@@ -28,6 +28,10 @@ class KorpaController extends Controller
 
     public function dodajAzurirajStavku(Request $request, $idProizvoda)
 {
+    if (!auth()->check()) {
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+    
     $validated = $request->validate([
         'kolicina' => 'required|integer|min:1',
     ]);

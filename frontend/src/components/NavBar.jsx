@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const NavBar = () => {
+const NavBar = ({ korpa }) => {
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isRecipesOpen, setIsRecipesOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState(""); // Praćenje trenutnog menija
@@ -71,7 +72,7 @@ return (
             >Proizvodi</button>
         </li>
         <li>
-            <Link to="/cart">Korpa</Link>
+            <Link to="/korpa">Korpa ({korpa && korpa.length ? korpa.length : 0})</Link>
         </li>
         <li>
             <Link to="/login">Login</Link>

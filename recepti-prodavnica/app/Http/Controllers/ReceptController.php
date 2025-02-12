@@ -23,7 +23,6 @@ class ReceptController extends Controller
     }
 }
 
-
     public function show($idRecepta)
 {
     try {
@@ -193,6 +192,4 @@ public function searchByIngredients(Request $request)
         ], 500);
     }
 }
-
-
 }
