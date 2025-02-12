@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  //window.location.reload();
   const popularRecipes = [
     { 
       id: 1, 

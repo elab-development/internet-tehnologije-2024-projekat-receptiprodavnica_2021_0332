@@ -17,7 +17,10 @@ const RegisterPage = () => {
       e.preventDefault();
         axios.post(
           "http://127.0.0.1:8000/api/register", userData).then((res)=>{console.log(res.data);
+            localStorage.setItem('token', res.data.access_token);
+            localStorage.removeItem('korpa');
             navigate("/");
+            window.location.reload(); // Osvežavamo stranicu nakon prijave
           })
           .catch((e)=>{console.log(e);
           });

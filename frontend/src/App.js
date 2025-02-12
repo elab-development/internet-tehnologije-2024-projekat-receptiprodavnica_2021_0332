@@ -26,6 +26,7 @@ function App() {
       }
     };
     fetchKorpa();
+    
   }, []);
 
   // Funkcija za osvežavanje korpe (poziva se nakon dodavanja u korpu)
@@ -51,7 +52,7 @@ function App() {
       <Route path="/recepti/:id" element={<RecipeDetailsPage />} />
       <Route path="/proizvodi" element={<Proizvodi azurirajKorpu={azurirajKorpu} />} />
         <Route path="/" element={<HomePage />} /> 
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage setKorpa={setKorpa}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/korpa" element={<Korpa korpa={korpa} />} />
       </Routes>

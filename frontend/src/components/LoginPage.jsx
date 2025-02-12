@@ -1,11 +1,12 @@
 import React from 'react'
 import axios from 'axios';
-import{useState} from "react";
+import{useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom'; //za preusmeravanje na HomePage pri loginovanju
 
-const LoginPage = () => {
+const LoginPage = ({setKorpa}) => {
     const [userData, setUserData] = useState({korisnickoIme:"", lozinka:""});
     const navigate = useNavigate();
+
 
     function handleInput (e){
         //console.log(e);
@@ -22,10 +23,30 @@ const LoginPage = () => {
           .then((res)=>{
            console.log(res.data);
            localStorage.setItem('token', res.data.access_token);
-           navigate("/");
+           localStorage.removeItem('korpa');
+          
+        // Osvežavanje korpe za novog korisnika
+        fetch("http://localhost:8000/api/korpa", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.stavke) {
+              setKorpa(data.stavke);  // Ažuriraj stanje korpe
+            } else {
+              setKorpa([]);  // Ako nema stavki, postavi praznu korpu
+            }
           })
-          .catch((e)=>{console.log(e);
+          .catch((e) => {
+            console.error("Greška prilikom učitavanja korpe", e);
+            setKorpa([]);  // Ako ne možeš da učitaš korpu, postavi praznu
           });
+
+        navigate("/");  // Preusmeri na početnu stranicu
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     }
 
   return (
