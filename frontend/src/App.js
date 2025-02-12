@@ -14,6 +14,20 @@ import Korpa from './components/Korpa';
 function App() {
   const [korpa, setKorpa] = useState([]);
 
+  useEffect(() => {
+    const fetchKorpa = async () => {
+      if (!localStorage.getItem("token")) return;
+      const response = await fetch("http://localhost:8000/api/korpa", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setKorpa(data.stavke);
+      }
+    };
+    fetchKorpa();
+  }, []);
+
   // Funkcija za osvežavanje korpe (poziva se nakon dodavanja u korpu)
   const azurirajKorpu = async () => {
     const response = await fetch("http://localhost:8000/api/korpa", {
@@ -27,13 +41,11 @@ function App() {
     }
   };
   
-  useEffect(() => {
-    azurirajKorpu(); // Učitavamo korpu pri pokretanju aplikacije
-  }, []);
+ 
 
   return (
     <BrowserRouter className="App">
-      <NavBar /> {/* Navigacioni bar */}
+      <NavBar korpa={korpa}/> {/* Navigacioni bar */}
       <Routes>
       <Route path="/" element={<HomePage />} /> 
       <Route path="/recepti/:id" element={<RecipeDetailsPage />} />

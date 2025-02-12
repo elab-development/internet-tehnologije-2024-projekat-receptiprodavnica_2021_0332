@@ -51,7 +51,8 @@ const NavBar = ({ korpa }) => {
 return (
 <>
   <nav className="navbar">
-    <div className="logo">CookMate</div>
+    {/* <div className="logo">CookMate</div> */}
+    <Link to="/" className="logo">CookMate</Link>
       <ul className="nav-links">
         <li>
            <Link to="/">Početna</Link>

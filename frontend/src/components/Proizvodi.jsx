@@ -30,6 +30,10 @@ const Proizvodi = ({ azurirajKorpu }) => {
 
   // Dodavanje proizvoda u korpu
   const dodajUKorpu = async () => {
+    if (!localStorage.getItem("token")) {
+      setGreska("Morate biti ulogovani da biste dodali proizvod u korpu!");
+      return;
+    }
     if (!modal) return;
     try {
       const response = await fetch(`http://localhost:8000/api/korpa/${modal.idProizvoda}`, {
@@ -56,9 +60,9 @@ const Proizvodi = ({ azurirajKorpu }) => {
   return (
     <section className="proizvodi-section">
       <h2 className="proizvodi-title">Proizvodi</h2>
-      {greska ? (
-        <p>{greska}</p>
-      ) : (
+      {greska && <p className="error-korpa">{greska}</p>}
+
+      
         <div className="proizvodi-list">
           {proizvodi.map(proizvod => (
             <div className="proizvodi-card" key={proizvod.idProizvoda}>
@@ -74,7 +78,7 @@ const Proizvodi = ({ azurirajKorpu }) => {
             </div>
           ))}
         </div>
-      )}
+      
       {modal && (
         <div className="modal">
           <div className="modal-content">

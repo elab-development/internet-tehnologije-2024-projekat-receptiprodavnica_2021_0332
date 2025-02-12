@@ -213,6 +213,11 @@ body {
   font-size: 30px;
   font-weight: bold;
   color: var(--bebi-roze); /* Bebi roze za logo */
+  text-decoration: none; /* Uklanja podvlačenje */
+}
+.logo:hover {
+  color: var(--bebi-roze); /* Drži boju ista prilikom hover-a, možeš je promeniti ako želiš */
+  text-decoration: none; /* Uklanja podvlačenje pri hover-u */
 }
 
 .nav-links {
@@ -410,7 +415,7 @@ body {
   display: flex;
   align-items: flex-start; /* Poravnava vrh slike i sadržaja */
   gap: 40px; /* Razmak između slike i sadržaja */
-  max-width: 1100px;
+  max-width: 1200px;
   width: 100%;
 }
 
@@ -419,11 +424,14 @@ body {
 .recipe-image-container {
   flex-shrink: 0; /* Da se slika ne skuplja */
   width: 40%;
+  margin-right: 10px;
 }
 
 .recipe-image-details{
-  width: 400px;  /* Fiksna širina */
-  height: 430px; /* Fiksna visina */
+  margin-top: 7px;
+  
+  width: 480px;  /* Fiksna širina */
+  height: 540px; /* Fiksna visina */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -433,7 +441,6 @@ body {
   font-size: 1.1rem;
   line-height: 1.6;
   color: var(--siva);
-
 }
 
 .recipe-content h3 {
@@ -573,4 +580,12 @@ body {
 
 .korpa li:nth-child(odd) {
   background: #f1f1f1; /* Blaga alternacija boja za čitljivost */
+}
+
+.error-korpa{
+  color: var(--bebi-roze);
+  padding: 10px;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
 }

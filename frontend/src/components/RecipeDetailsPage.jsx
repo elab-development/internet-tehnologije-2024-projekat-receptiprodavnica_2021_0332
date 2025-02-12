@@ -49,6 +49,9 @@ const RecipeDetailsPage = () => {
         <p>{recipe.uputstvo}</p>
         <p><strong>Vreme pripreme:</strong> {recipe.vremePripreme} minuta</p>
         <p><strong>Broj porcija:</strong> {recipe.brojPorcija}</p>
+        <p><strong>Kategorija jela:</strong> {recipe.kategorija}</p>
+        <p><strong>Tip jela:</strong> {recipe.tip}</p>
+        <p><strong>Broj kalorija:</strong> {recipe.broj_kalorija}</p>
       </div>
       </div>
       <button className="back-btn-details" onClick={handleBack}>Povratak</button>
