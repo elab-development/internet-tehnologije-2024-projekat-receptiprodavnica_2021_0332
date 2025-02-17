@@ -234,7 +234,8 @@ body {
 
 .nav-links a,
 .dropdown-button,
-.submenu-button {
+.submenu-button,
+.logout-button {
   text-decoration: none;
   color: var(--bebi-roze);
   font-size: 16px;
@@ -247,7 +248,8 @@ body {
 
 .nav-links a:hover,
 .dropdown-button:hover,
-.submenu-button:hover {
+.submenu-button:hover,
+.logout-button:hover {
   background-color: var(--tamna-siva); /* Tamnija siva na hover */
   border-radius: 4px;
 }

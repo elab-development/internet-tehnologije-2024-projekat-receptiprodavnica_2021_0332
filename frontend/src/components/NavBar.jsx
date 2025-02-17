@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
 
-const NavBar = ({ korpa }) => {
+const NavBar = ({ korpa, setKorpa }) => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isRecipesOpen, setIsRecipesOpen] = useState(false);
+  // const [isRecipesOpen, setIsRecipesOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState(""); // Praćenje trenutnog menija
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Prati stanje korisnika
   const [proizvodi, setProizvodi] = useState([]);
   const [greska, setGreska] = useState("");
   const navigate = useNavigate();
+
+
 
   const fetchProizvodi = async (kategorija) => {
     try {
@@ -48,6 +51,23 @@ const NavBar = ({ korpa }) => {
     setIsSidebarOpen(false);  // Zatvori sidebar nakon što se odabere kategorija
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // Ako postoji token, korisnik je ulogovan
+  }, []);
+
+  const handleLogout = () => {
+    const userId = localStorage.getItem("user_id"); // Prvo uzmemo ID korisnika
+    if (userId) {
+      localStorage.setItem(`korpa_${userId}`, JSON.stringify(korpa)); // Sačuvamo korpu pre brisanja
+    }
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("user_id"); // Brišemo ID korisnika
+    setKorpa([]); // Praznimo stanje korpe u aplikaciji
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
+
 return (
 <>
   <nav className="navbar">
@@ -72,11 +92,17 @@ return (
               onClick={() => toggleSidebar("products")}
             >Proizvodi</button>
         </li>
-        <li>
+        {isLoggedIn && (
+          <li>
             <Link to="/korpa">Korpa ({korpa && korpa.length ? korpa.length : 0})</Link>
-        </li>
+          </li>
+        )}
         <li>
-            <Link to="/login">Login</Link>
+        {isLoggedIn ? (
+              <button onClick={handleLogout} className="logout-button">Logout</button>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
         </li>
                   </ul>
                 </nav>

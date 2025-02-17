@@ -24,6 +24,7 @@ const LoginPage = ({setKorpa}) => {
            console.log(res.data);
            localStorage.setItem('token', res.data.access_token);
            localStorage.removeItem('korpa');
+           
           
         // Osvežavanje korpe za novog korisnika
         fetch("http://localhost:8000/api/korpa", {
@@ -41,8 +42,10 @@ const LoginPage = ({setKorpa}) => {
             console.error("Greška prilikom učitavanja korpe", e);
             setKorpa([]);  // Ako ne možeš da učitaš korpu, postavi praznu
           });
-
+          
+       
         navigate("/");  // Preusmeri na početnu stranicu
+        window.location.reload();
       })
       .catch((e) => {
         console.log(e);

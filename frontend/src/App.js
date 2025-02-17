@@ -46,7 +46,7 @@ function App() {
 
   return (
     <BrowserRouter className="App">
-      <NavBar korpa={korpa}/> {/* Navigacioni bar */}
+      <NavBar korpa={korpa} setKorpa={setKorpa}/> {/* Navigacioni bar */}
       <Routes>
       <Route path="/" element={<HomePage />} /> 
       <Route path="/recepti/:id" element={<RecipeDetailsPage />} />
