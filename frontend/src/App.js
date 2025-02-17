@@ -29,6 +29,11 @@ function App() {
     
   }, []);
 
+  const resetKorpa = () => {
+    setKorpa([]);  // Resetuje stanje korpe
+    localStorage.removeItem('korpa');  // Očisti korpu iz localStorage
+  };
+
   // Funkcija za osvežavanje korpe (poziva se nakon dodavanja u korpu)
   const azurirajKorpu = async () => {
     const response = await fetch("http://localhost:8000/api/korpa", {
@@ -54,7 +59,7 @@ function App() {
         <Route path="/" element={<HomePage />} /> 
         <Route path="/login" element={<LoginPage setKorpa={setKorpa}/>} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/korpa" element={<Korpa korpa={korpa} />} />
+        <Route path="/korpa" element={<Korpa korpa={korpa} setKorpa={setKorpa} resetKorpa={resetKorpa} />} />
       </Routes>
     </BrowserRouter>
   );

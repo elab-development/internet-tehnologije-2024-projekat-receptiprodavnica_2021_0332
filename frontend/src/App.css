@@ -550,7 +550,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blaga senka */
-  max-width: 400px; /* Ograničavanje širine */
+  max-width: 600px; /* Ograničavanje širine */
   margin: 20px auto; /* Centriranje */
   text-align: center; /* Centriranje teksta */
 }
@@ -578,7 +578,36 @@ body {
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 16px;
+
+  display: flex; /* Postavljanje flexbox-a za raspored */
+  justify-content: space-between; /* Razdvaja sadržaj između leve i desne strane */
+  align-items: center; /* Vertikalno poravnavanje */
 }
+
+.korpa .remove-icon {
+  cursor: pointer;
+  margin-right: 10px; /* Razmak sa leve strane */
+  font-size: 20px; /* Veličina ikone */
+  color: var(--bordo); /* Bordo boja za ikonu kante */
+  transition: color 0.3s ease;
+}
+
+.korpa .remove-icon:hover {
+  color: var(--tamna-siva);
+}
+
+.korpa .proizvod-info {
+  flex-grow: 1; /* Ovaj div zauzima sav prostor sa leve strane */
+  text-align: left; /* Centriranje teksta unutar div-a */
+  margin-left: 10px;
+}
+
+.korpa .dugme-kolicina-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .korpa li:nth-child(odd) {
   background: #f1f1f1; /* Blaga alternacija boja za čitljivost */
@@ -591,3 +620,99 @@ body {
   margin: 10px 0;
   font-weight: bold;
 }
+
+.dugme-kolicina {
+  background-color: var(--bordo); /* Boja pozadine */
+  color: white; /* Boja teksta */
+  border: none;
+  border-radius: 5px;
+  width: 30px; /* Širina dugmeta */
+  height: 30px; /* Visina dugmeta */
+  margin: 0 5px; /* Razmak između dugmadi */
+  font-size: 20px; /* Veličina fonta za simbol */
+  cursor: pointer; /* Kursor u obliku ruke */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease; /* Efekat prelaza za pozadinsku boju */
+}
+
+ .dugme-kolicina:hover {
+  background-color: var(--tamno-bordo); /* Tamnija pozadina pri hover efektu */
+}
+.idi-na-placanje {
+  background-color: var(--bebi-roze); /* Boja pozadine dugmeta */
+  color:  var(--bordo); /* Boja teksta */
+  border: none;
+  border-radius: 5px;
+  width: 100%; /* Širina dugmeta */
+  padding: 10px; /* Unutrašnji razmak */
+  font-size: 18px; /* Veličina fonta */
+  cursor: pointer; /* Kursor u obliku ruke */
+  transition: background-color 0.3s ease; /* Efekat prelaza za pozadinsku boju */
+  margin-top: 10px; /* Razmak od prethodnog elementa */
+  max-width: 300px;
+}
+
+.idi-na-placanje:hover {
+  color: var(--tamno-bordo); /* Tamnija pozadina pri hover efektu */
+}
+
+.dugme-ispod-korpe {
+  margin-top: 20px; /* Razmak između korpe i dugmeta */
+  text-align: center; /* Centriranje dugmeta */
+}
+.idi-na-placanje h2{
+  color: var(--bordo);
+  font-size: 25px;
+}
+
+
+.checkout {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+  margin-top: 150px;
+}
+
+.checkout h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.checkout form {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout label {
+  margin-bottom: 5px;
+}
+
+.checkout input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.checkout button {
+  padding: 10px;
+  background-color: var(--bordo);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkout button:hover {
+  background-color: var(--tamno-bordo);
+}
+
+
+
+ 
