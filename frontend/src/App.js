@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from'react';
 import HomePage from './components/HomePage';
@@ -9,7 +8,7 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import RecipeDetailsPage from './components/RecipeDetailsPage';
 import Proizvodi from './components/Proizvodi';
 import Korpa from './components/Korpa';
-;
+import RecipeList from "./components/RecipeList";
 
 function App() {
   const [korpa, setKorpa] = useState([]);
@@ -60,6 +59,7 @@ function App() {
         <Route path="/login" element={<LoginPage setKorpa={setKorpa}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/korpa" element={<Korpa korpa={korpa} setKorpa={setKorpa} resetKorpa={resetKorpa} />} />
+        <Route path="/recepti" element={<RecipeList />} />
       </Routes>
     </BrowserRouter>
   );

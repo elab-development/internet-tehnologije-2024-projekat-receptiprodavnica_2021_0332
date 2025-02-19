@@ -2,35 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
-
 const NavBar = ({ korpa, setKorpa }) => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const [isRecipesOpen, setIsRecipesOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState(""); // Praćenje trenutnog menija
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Prati stanje korisnika
-  const [proizvodi, setProizvodi] = useState([]);
-  const [greska, setGreska] = useState("");
   const navigate = useNavigate();
-
-
-
-  const fetchProizvodi = async (kategorija) => {
-    try {
-      const response = await fetch(`/proizvodi/pretraga?kategorija=${kategorija}`);
-      if (!response.ok) {
-        throw new Error("Nema proizvoda u ovoj kategoriji!");
-      }
-      const data = await response.json();
-      setProizvodi(data.proizvodi.data); // Laravel vraća paginirane podatke unutar `data`
-      setGreska(""); // Resetujemo grešku ako je bila prethodno
-    } catch (error) {
-      setProizvodi([]); // Ako nema rezultata, praznimo listu
-      setGreska(error.message);
-    }
-  };
-
 
   const toggleSidebar = (menu = "") => {
     if (isSidebarOpen && currentMenu === menu) {
@@ -81,10 +59,17 @@ return (
             <Link to="/moji-sastojci">Moji sastojci</Link>
         </li>
         <li className="dropdown">
-            <button
-              className="dropdown-button"
-              onClick={() => toggleSidebar("recipes")}
-            >Recepti</button>
+        <button
+          className="dropdown-button"
+          onClick={() => {
+          
+          setTimeout(() => {
+          navigate("/recepti"); // Navigiraj na stranicu sa svim receptima
+          }, 300); // Kratko kašnjenje da sidebar prvo reaguje
+          }}
+          >
+          Recepti
+      </button>
         </li>
         <li className="dropdown">
             <button
@@ -134,122 +119,16 @@ return (
                           <button onClick={() =>  handleCategoryClick("zitarice")}>Žitarice</button>
                           </li>
                           <li>
-                          <button onClick={() =>  handleCategoryClick("testenina")}>Testenina</button>
+                          <button onClick={() =>  handleCategoryClick("testenina")}>Testenine</button>
+                          </li>
+                          <li>
+                          <button onClick={() =>  handleCategoryClick("ulje-zacin")}>Ulja i začini</button>
                           </li>
                         </ul>
                       </>
                     )}
           
-                    {/* Kategorije recepata */}
-                    {currentMenu === "recipes" && (
-                      <>
-                        <ul>
-                          <li>
-                            <button onClick={() => setCurrentMenu("kategorija-jela")}>
-                              Kategorija jela
-                            </button>
-                          </li>
-                          <li>
-                            <button onClick={() => setCurrentMenu("tip-jela")}>
-                              Tip jela
-                            </button>
-                          </li>
-                          <li>
-                            <button onClick={() => setCurrentMenu("vreme-pripreme")}>
-                              Vreme pripreme
-                            </button>
-                          </li>
-                          <li>
-                            <button onClick={() => setCurrentMenu("broj-kalorija")}>
-                              Broj kalorija
-                            </button>
-                          </li>
-                        </ul>
-                      </>
-                    )}
-          
-                    {/* Podkategorije za "Kategorija jela" */}
-                    {currentMenu === "kategorija-jela" && (
-                      <>
-                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                          ←
-                        </button>
-                        <h3>Kategorija jela</h3>
-                        <ul>
-                          <li>
-                            <Link to="/recepti/slatko">Slatko</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/slano">Slano</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/posno">Posno</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/vegansko">Vegansko</Link>
-                          </li>
-                        </ul>
-                      </>
-                    )}
-          {/* Podkategorije za "Tip jela" */}
-          
-          {currentMenu === "tip-jela" && (
-                      <>
-                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                          ←
-                        </button>
-                        <h3>Tip jela</h3>
-                        <ul>
-                          <li>
-                            <Link to="/recepti/predjelo">Predjelo</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/glavno-jelo">Glavno jelo</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/desert">Desert</Link>
-                          </li>
-                        </ul>
-                      </>
-                    )}
-                    {currentMenu === "vreme-pripreme" && (
-                      <>
-                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                          ←
-                        </button>
-                        <h3>Vreme pripreme</h3>
-                        <ul>
-                          <li>
-                            <Link to="/recepti/30">Do 30 minuta</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/30-60">Između 30 i 60 minuta</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/60">Preko 60 minuta</Link>
-                          </li>
-                        </ul>
-                      </>
-                    )}
-                    {currentMenu === "broj-kalorija" && (
-                      <>
-                        <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                          ←
-                        </button>
-                        <h3>Broj kalorija</h3>
-                        <ul>
-                          <li>
-                            <Link to="/recepti/niskokaloricni">Niskokalorični</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/srednjekaloricni">Srednjekalorični</Link>
-                          </li>
-                          <li>
-                            <Link to="/recepti/visokokaloricni">Visokokalorični</Link>
-                          </li>
-                        </ul>
-                      </>
-                    )}
+                    
                   </div>
                 )}
               </>

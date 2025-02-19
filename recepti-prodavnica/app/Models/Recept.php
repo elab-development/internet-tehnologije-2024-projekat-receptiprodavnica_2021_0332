@@ -10,7 +10,7 @@ class Recept extends Model
     /** @use HasFactory<\Database\Factories\ReceptFactory> */
     protected $primaryKey = 'idRecepta';
     protected $table = 'recepti';
-    protected $fillable = ['naziv', 'uputstvo', 'vremePripreme', 'brojPorcija'];
+    protected $fillable = ['naziv', 'uputstvo', 'vremePripreme', 'brojPorcija', 'slika'];
     use HasFactory;
 
    public function receptProizvod()  {

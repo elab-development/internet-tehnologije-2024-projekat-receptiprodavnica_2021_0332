@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Checkout = ({resetKorpa}) => {
   const [formData, setFormData] = useState({
@@ -64,7 +63,7 @@ const Checkout = ({resetKorpa}) => {
       <h2>Podaci za narudžbinu</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="imeKupca">Ime:</label>
+          <label htmlFor="imeKupca">Ime: </label>
           <input
             type="text"
             id="imeKupca"
@@ -75,7 +74,7 @@ const Checkout = ({resetKorpa}) => {
           />
         </div>
         <div>
-          <label htmlFor="prezimeKupca">Prezime:</label>
+          <label htmlFor="prezimeKupca">Prezime: </label>
           <input
             type="text"
             id="prezimeKupca"
@@ -86,7 +85,7 @@ const Checkout = ({resetKorpa}) => {
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email">Email: </label>
           <input
             type="email"
             id="email"
@@ -97,7 +96,7 @@ const Checkout = ({resetKorpa}) => {
           />
         </div>
         <div>
-          <label htmlFor="adresaIsporuke">Adresa:</label>
+          <label htmlFor="adresaIsporuke">Adresa: </label>
           <input
             type="text"
             id="adresaIsporuke"

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom"; // Importuj useHistory za navigaciju
 import axios from "axios"; // Importuj axios
@@ -30,7 +29,9 @@ const RecipeDetailsPage = () => {
   }, [id,state]);
 
   const handleBack = () => {
-    navigate("/"); // Vraća korisnika na početnu stranu (ili drugu stranicu po vašoj želji)
+    // Koristi 'from' iz state-a ako postoji, inače ide na HomePage
+    const from = state?.from || "/";
+    navigate(from); 
   };
 
   if (loading) return <p className="loading-text">Učitavanje recepta...</p>;
@@ -41,7 +42,8 @@ const RecipeDetailsPage = () => {
       <h1>{recipe.naziv}</h1>
       <div className="recipe-content-wrapper">
       <div className="recipe-image-container">
-      <img src={state?.imageUrl || '/images/default.jpg'} alt={recipe?.naziv} className="recipe-image-details" />
+      <img src={recipe.slika ? `http://127.0.0.1:8000/storage/${recipe.slika}` : "/images/default.jpg"} alt={recipe.naziv} className="recipe-image-details" />
+
       </div>
       <div className="recipe-content">
         

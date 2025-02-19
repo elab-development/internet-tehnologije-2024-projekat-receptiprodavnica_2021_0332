@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import{useState, useEffect} from "react";
+import{useState} from "react";
 import {useNavigate} from 'react-router-dom'; //za preusmeravanje na HomePage pri loginovanju
 
 const LoginPage = ({setKorpa}) => {

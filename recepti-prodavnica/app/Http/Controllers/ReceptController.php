@@ -44,6 +44,7 @@ class ReceptController extends Controller
         'uputstvo' => 'required|string',
         'vremePripreme' => 'required|integer|min:1',
         'brojPorcija' => 'required|integer|min:1',
+       
     ]);
 
     try {
@@ -53,6 +54,7 @@ class ReceptController extends Controller
             'uputstvo' => $validated['uputstvo'],
             'vremePripreme' =>$validated['vremePripreme'],
             'brojPorcija' =>$validated['brojPorcija'],
+            'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         return response()->json([
@@ -75,19 +77,15 @@ public function update(Request $request, $idRecepta)
         'uputstvo' => 'required|string',
         'vremePripreme' => 'required|integer|min:1',
         'brojPorcija' => 'required|integer|min:1',
+        'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
     try {
         // Pronalaženje recepta
         $recept = Recept::findOrFail($idRecepta);
 
-        // Ažuriranje podataka
-        $recept->update([
-            'naziv' => $validated['naziv'],
-            'uputstvo' => $validated['uputstvo'],
-            'vremePripreme' =>$validated['vremePripreme'],
-            'brojPorcija' =>$validated['brojPorcija'],
-        ]);
+        $recept->fill($validated);
+        $recept->save();
 
         return response()->json([
             'message' => 'Uspešno izmenjen recept!',
@@ -123,25 +121,6 @@ public function destroy($idRecepta)
 
 public function searchByIngredients(Request $request)
 {
-    // $sastojci = $request->input('sastojci'); // Očekuje niz stringova sa imenima sastojaka
-
-    // if (empty($sastojci) || !is_array($sastojci)) {
-    //     return response()->json(['error' => 'Unesite validan niz sastojaka.'], 400);
-    // }
-
-    // // Pretraživanje recepata koji odgovaraju unetim sastojcima
-    // $recepti = Recept::whereHas('receptProizvod', function ($query) use ($sastojci) {
-    //     $query->whereIn('naziv', $sastojci);
-    // })->with(['receptProizvod' => function ($query) {
-    //     $query->select('naziv', 'mernaJedinica');
-    // }])->get();
-
-    // if ($recepti->isEmpty()) {
-    //     return response()->json(['message' => 'Nema odgovarajućih recepata za unete sastojke!'], 404);
-    // }
-
-    // return response()->json($recepti, 200);
-    // Validacija ulaznih podataka
     $validated = $request->validate([
         'sastojci' => 'nullable|array', // Očekuje niz sastojaka
         'sastojci.*' => 'string|max:255', // Svaki sastojak je string
@@ -151,6 +130,7 @@ public function searchByIngredients(Request $request)
     ]);
 
     $sastojci = $validated['sastojci'] ?? [];
+
 
     try {
         // Kreiranje osnovnog query-a za recepte

@@ -24,7 +24,37 @@ class KorpaController extends Controller
         ], 200);
     }
 
-    
+    public function obrisiStavkuIzKorpe($idProizvoda)
+{
+    if (!auth()->check()) {
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    $korpa = Korpa::where('idKorisnika', auth()->id())->first();
+
+    if (!$korpa) {
+        return response()->json(['message' => 'Korpa ne postoji.'], 404);
+    }
+
+    // Pronalazimo stavku u korpi
+    $stavka = KorpaStavka::where('idKorpe', $korpa->idKorpe)
+                          ->where('idProizvoda', $idProizvoda)
+                          ->first();
+
+    if (!$stavka) {
+        return response()->json(['message' => 'Stavka nije pronađena u korpi.'], 404);
+    }
+
+    // Brišemo stavku iz baze
+    $stavka->delete();
+
+    // Ažuriranje ukupne cene korpe
+    $ukupnaCena = KorpaStavka::where('idKorpe', $korpa->idKorpe)->sum('cena');
+    $korpa->update(['ukupnaCena' => $ukupnaCena]);
+
+    return response()->json(['message' => 'Proizvod je uklonjen iz korpe.'], 200);
+}
+
 
     public function dodajAzurirajStavku(Request $request, $idProizvoda)
 {

@@ -30,8 +30,10 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->
 Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:registrovani'])->group(function () {
     // Ruta za pregled korpe
     Route::get('/korpa', [KorpaController::class, 'pregledKorpe']);
+    
     // Ruta za dodavanje ili ažuriranje stavke u korpi
     Route::post('/korpa/{idProizvoda}', [KorpaController::class, 'dodajAzurirajStavku']);
+    Route::delete('/korpa/obrisi/{idProizvoda}', [KorpaController::class, 'obrisiStavkuIzKorpe']);
     
     // Ruta za generisanje korpe prema receptu
     Route::post('/korpa/recept/{idRecepta}', [KorpaController::class, 'generateCart']);
@@ -44,8 +46,8 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:registrova
 Route::get('/proizvodi/pretraga', [ProizvodController::class, 'search']);
 Route::post('/pretraga-recepata', [ReceptController::class, 'searchByIngredients']);
 
-    Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
-    Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
+Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
+Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
 
 
 

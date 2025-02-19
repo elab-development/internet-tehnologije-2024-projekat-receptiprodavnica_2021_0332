@@ -288,7 +288,7 @@ body {
 
 /* Responzivni dizajn */
 @media (max-width: 768px) {
-  .navbar {
+  .navbar, .sidebar-recipeList {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -315,7 +315,7 @@ body {
     display: block;
   }
 }
-.sidebar {
+.sidebar, .sidebar-recipeList {
   position: fixed;
   top: 0;
   left: -300px; /* Skriveno van ekrana */
@@ -329,11 +329,11 @@ body {
   z-index: 1000;
 }
 
-.sidebar.open {
+.sidebar.open, .sidebar-recipeList.open{
   left: 0; /* Vidljivo */
 }
 
-.sidebar .close-btn {
+.sidebar .close-btn, .sidebar-recipeList .close-btn {
   position: absolute; /* Pozicioniranje u odnosu na roditeljski element */
   top: 5px; /* Udaljenost od vrha */
   left: 350px; /* Udaljenost od desne strane */
@@ -343,7 +343,7 @@ body {
   color: var(--bordo);
   cursor: pointer;
 }
-.back-btn{
+.back-btn, .sidebar-recipeList .back-btn{
   position: absolute; /* Pozicioniranje u odnosu na roditeljski element */
   top: 5px; /* Udaljenost od vrha */
   left: 20px; /* Udaljenost od leve strane */
@@ -357,30 +357,30 @@ body {
 .close-btn:hover {
   color: var(--tamna-siva); /* Bordo boja na hover */
 }
-.sidebar ul {
+.sidebar ul, .sidebar-recipeList ul {
   list-style: none;
   padding: 0;
 }
 
-.sidebar ul li {
+.sidebar ul li, .sidebar-recipeList ul li{
   margin: 20px 0;
 }
 
-.sidebar ul li a {
+.sidebar ul li a, .sidebar-recipeList ul li a {
   text-decoration: none;
   color: var(--bordo);
   font-size: 28px;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li a:hover, .sidebar-recipeList ul li a:hover {
   color: var(--tamna-siva);
 }
-.sidebar h3 {
+.sidebar h3, .sidebar-recipeList h3 {
   color: var(--bordo);
   margin-top: 30px; /* Dodaje razmak sa vrha, čineći h3 nižim */
   font-size: 35px;  /* Povećava veličinu fonta za h3 */
 }
-.sidebar button {
+.sidebar button, .sidebar-recipeList button{
   background: none;
   border: none;
   font-size: 28px;
@@ -391,7 +391,7 @@ body {
   width: 100%;
 }
 
-.sidebar button:hover {
+.sidebar button:hover, .sidebar-recipeList button:hover {
   color: var(--tamna-siva); /* Bordo boja na hover */
 }
 
@@ -713,6 +713,79 @@ body {
   background-color: var(--tamno-bordo);
 }
 
+.paginacija {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
 
+.paginacija button {
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--bebi-roze);
+  color: var(--bordo);
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.paginacija button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+.paginacija span {
+  font-weight: bold;
+  color: var(--bordo);
+  padding: 5px 10px;
+  background-color: var(--bebi-roze);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.recipes-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.recipe-box {
+  border: 1px solid #ddd;
+  background-color: var(--bebi-roze);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 10px; /* Veći razmak između boxeva */
+  box-sizing: border-box; /* Osigurava da padding ne utiče na širinu boxa */
+  height: 400px;
+}
+
+.recipe-box:hover {
+  transform: scale(1.05);
+}
+
+.recipe-list-image {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.recipe-box h3{
+  margin-top: 20px;
+  color: var(--bordo);
+}
+.recipe-box p{
+  color: var(--bordo);
+}
+.filter-icon {
+  position: absolute;
+  top: 60px; /* Udaljeno od vrha */
+  left: 30px; /* Udaljeno od leve strane */
+  cursor: pointer;
+  color: var(--bebi-roze);
+  z-index: 100; /* Da bude iznad drugih elemenata */
+}
 
  

@@ -8,16 +8,19 @@ const Proizvodi = ({ azurirajKorpu }) => {
   const [greska, setGreska] = useState("");
   const [modal, setModal] = useState(null); // Drži proizvod koji korisnik dodaje
   const [kolicina, setKolicina] = useState(1); // Početna količina
+  const [trenutnaStranica, setTrenutnaStranica] = useState(1);
+  const [ukupnoStranica, setUkupnoStranica] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/proizvodi/pretraga?kategorija=${kategorija}`);
+        const response = await fetch(`http://localhost:8000/api/proizvodi/pretraga?kategorija=${kategorija}&page=${trenutnaStranica}`);
         if (!response.ok) {
           throw new Error("Nema proizvoda za ovu kategoriju!");
         }
         const data = await response.json();
         setProizvodi(data.proizvodi.data);
+        setUkupnoStranica(data.proizvodi.last_page);
       } catch (error) {
         setGreska(error.message);
       }
@@ -26,7 +29,13 @@ const Proizvodi = ({ azurirajKorpu }) => {
     if (kategorija) {
       fetchData();
     }
-  }, [kategorija]);
+  }, [kategorija,trenutnaStranica]);
+
+  const promeniStranicu = (novaStranica) => {
+    if (novaStranica >= 1 && novaStranica <= ukupnoStranica) {
+      setTrenutnaStranica(novaStranica);
+    }
+  };
 
   // Dodavanje proizvoda u korpu
   const dodajUKorpu = async () => {
@@ -78,7 +87,24 @@ const Proizvodi = ({ azurirajKorpu }) => {
             </div>
           ))}
         </div>
-      
+
+      {/* Dugmad za paginaciju */}
+      <div className="paginacija">
+        <button
+          onClick={() => promeniStranicu(trenutnaStranica - 1)}
+          disabled={trenutnaStranica === 1}
+        >
+          Prethodna
+        </button>
+        <span> Stranica {trenutnaStranica} od {ukupnoStranica}</span>
+        <button
+          onClick={() => promeniStranicu(trenutnaStranica + 1)}
+          disabled={trenutnaStranica === ukupnoStranica}
+        >
+          Sledeća
+        </button>
+      </div>
+
       {modal && (
         <div className="modal">
           <div className="modal-content">
