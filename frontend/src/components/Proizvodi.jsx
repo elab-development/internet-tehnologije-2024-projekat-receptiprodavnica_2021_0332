@@ -71,7 +71,6 @@ const Proizvodi = ({ azurirajKorpu }) => {
       <h2 className="proizvodi-title">Proizvodi</h2>
       {greska && <p className="error-korpa">{greska}</p>}
 
-      
         <div className="proizvodi-list">
           {proizvodi.map(proizvod => (
             <div className="proizvodi-card" key={proizvod.idProizvoda}>
@@ -81,8 +80,7 @@ const Proizvodi = ({ azurirajKorpu }) => {
               <button
                 className="buy-button"
                 onClick={() => setModal(proizvod)}
-              >
-                Dodaj u korpu
+              >Dodaj u korpu
               </button>
             </div>
           ))}
@@ -93,15 +91,13 @@ const Proizvodi = ({ azurirajKorpu }) => {
         <button
           onClick={() => promeniStranicu(trenutnaStranica - 1)}
           disabled={trenutnaStranica === 1}
-        >
-          Prethodna
+        >Prethodna
         </button>
         <span> Stranica {trenutnaStranica} od {ukupnoStranica}</span>
         <button
           onClick={() => promeniStranicu(trenutnaStranica + 1)}
           disabled={trenutnaStranica === ukupnoStranica}
-        >
-          Sledeća
+        >Sledeća
         </button>
       </div>
 

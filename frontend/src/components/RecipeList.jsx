@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams} from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom"; 
 
@@ -10,6 +10,7 @@ const RecipesList = () => {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const [error, setError] = useState(null);
+  const { kategorija } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,34 +59,15 @@ const RecipesList = () => {
       {/* Sidebar sa filtrima */}
       {isSidebarOpen && (
         <div className="sidebar-recipeList open">
-          <button className="close-btn" onClick={handleBackClick}>
-            ×
-          </button>
+          <button className="close-btn" onClick={handleBackClick}>×</button>
 
           {/* Kategorije za recepte */}
           {currentMenu === "recipes" && (
             <>
               <ul>
-                <li>
-                  <button onClick={() => setCurrentMenu("kategorija-jela")}>
-                    Kategorija jela
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setCurrentMenu("tip-jela")}>
-                    Tip jela
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setCurrentMenu("vreme-pripreme")}>
-                    Vreme pripreme
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setCurrentMenu("broj-kalorija")}>
-                    Broj kalorija
-                  </button>
-                </li>
+                <li><button onClick={() => setCurrentMenu("kategorija-jela")}>Kategorija jela </button></li>
+                <li><button onClick={() => setCurrentMenu("vreme-pripreme")}> Vreme pripreme</button></li>
+                <li><button onClick={() => setCurrentMenu("broj-kalorija")}>Broj kalorija</button></li>
               </ul>
             </>
           )}
@@ -93,44 +75,15 @@ const RecipesList = () => {
           {/* Podkategorije za "Kategorija jela" */}
           {currentMenu === "kategorija-jela" && (
             <>
-              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                ←
-              </button>
+              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}> ←</button>
               <h3>Kategorija jela</h3>
               <ul>
-                <li>
-                  <Link to="/recepti/slatko">Slatko</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/slano">Slano</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/posno">Posno</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/vegansko">Vegansko</Link>
-                </li>
-              </ul>
-            </>
-          )}
-
-          {/* Podkategorije za "Tip jela" */}
-          {currentMenu === "tip-jela" && (
-            <>
-              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                ←
-              </button>
-              <h3>Tip jela</h3>
-              <ul>
-                <li>
-                  <Link to="/recepti/predjelo">Predjelo</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/glavno-jelo">Glavno jelo</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/desert">Desert</Link>
-                </li>
+              <li><Link to="/recepti/predjela">Hladna predjela</Link></li>
+                <li><Link to="/recepti/salate">Salate</Link></li>
+                <li><Link to="/recepti/paste-rizoto">Paste i rižota</Link> </li>
+                <li><Link to="/recepti/glavna-jela">Glavna jela</Link></li>
+                <li><Link to="/recepti/kolaci">Kolači</Link> </li>
+                <li><Link to="/recepti/torte">Torte</Link></li>
               </ul>
             </>
           )}
@@ -138,20 +91,12 @@ const RecipesList = () => {
           {/* Podkategorije za "Vreme pripreme" */}
           {currentMenu === "vreme-pripreme" && (
             <>
-              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                ←
-              </button>
+              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}> ←</button>
               <h3>Vreme pripreme</h3>
               <ul>
-                <li>
-                  <Link to="/recepti/30">Do 30 minuta</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/30-60">Između 30 i 60 minuta</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/60">Preko 60 minuta</Link>
-                </li>
+                <li><Link to="/recepti/30">Do 30 minuta</Link></li>
+                <li> <Link to="/recepti/30-60">Između 30 i 60 minuta</Link></li>
+                <li><Link to="/recepti/60">Preko 60 minuta</Link></li>
               </ul>
             </>
           )}
@@ -159,20 +104,12 @@ const RecipesList = () => {
           {/* Podkategorije za "Broj kalorija" */}
           {currentMenu === "broj-kalorija" && (
             <>
-              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>
-                ←
-              </button>
+              <button className="back-btn" onClick={() => setCurrentMenu("recipes")}>←</button>
               <h3>Broj kalorija</h3>
               <ul>
-                <li>
-                  <Link to="/recepti/niskokaloricni">Niskokalorični</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/srednjekaloricni">Srednjekalorični</Link>
-                </li>
-                <li>
-                  <Link to="/recepti/visokokaloricni">Visokokalorični</Link>
-                </li>
+                <li><Link to="/recepti/niskokaloricni">Niskokalorični</Link></li>
+                <li><Link to="/recepti/srednjekaloricni">Srednjekalorični</Link></li>
+                <li><Link to="/recepti/visokokaloricni">Visokokalorični</Link></li>
               </ul>
             </>
           )}
@@ -183,16 +120,11 @@ const RecipesList = () => {
           key={recipe.idRecepta}
           className="recipe-box"
           onClick={() => navigate(`/recepti/${recipe.idRecepta}`, { state: { from: location.pathname, imageUrl: recipe.slika } })}
-        >
-          <img src={`http://127.0.0.1:8000/storage/${recipe.slika}`} alt={recipe.naziv} className="recipe-list-image" />
-
+        ><img src={`http://127.0.0.1:8000/storage/${recipe.slika}`} alt={recipe.naziv} className="recipe-list-image" />
           <h3>{recipe.naziv}</h3>
           <p><i class="fa-regular fa-clock"></i>  {recipe.vremePripreme} min</p>
         </div>
       ))}
-
-      
-     
     </div>
   );
 };

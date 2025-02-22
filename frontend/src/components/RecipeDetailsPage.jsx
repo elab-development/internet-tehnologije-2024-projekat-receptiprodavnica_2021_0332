@@ -10,8 +10,6 @@ const RecipeDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
-
   useEffect(() => {
     console.log(state);
     // Koristi axios za poziv API-ja
@@ -46,13 +44,11 @@ const RecipeDetailsPage = () => {
 
       </div>
       <div className="recipe-content">
-        
         <h3>Uputstvo:</h3>
         <p>{recipe.uputstvo}</p>
         <p><strong>Vreme pripreme:</strong> {recipe.vremePripreme} minuta</p>
         <p><strong>Broj porcija:</strong> {recipe.brojPorcija}</p>
         <p><strong>Kategorija jela:</strong> {recipe.kategorija}</p>
-        <p><strong>Tip jela:</strong> {recipe.tip}</p>
         <p><strong>Broj kalorija:</strong> {recipe.broj_kalorija}</p>
       </div>
       </div>

@@ -1,7 +1,6 @@
 import React, { useEffect} from "react";
 import Checkout from './Checkout'; // Uvozi Checkout komponentu
 
-
 const Korpa = ({ korpa, setKorpa, resetKorpa }) => {
   
   // Funkcija za uklanjanje proizvoda iz korpe
@@ -25,7 +24,6 @@ const Korpa = ({ korpa, setKorpa, resetKorpa }) => {
     .catch((error) => console.error("Greška:", error));
   };
   
-  
   // Funkcija za ažuriranje količine proizvoda
   const updateQuantity = (idProizvoda, action) => {
     setKorpa((prevKorpa) => 
@@ -44,7 +42,6 @@ const Korpa = ({ korpa, setKorpa, resetKorpa }) => {
   useEffect(() => {
     localStorage.setItem("korpa", JSON.stringify(korpa));
   }, [korpa]);
-
 
  // Skrolovanje ka delu za unos podataka
  const scrollToCheckout = () => {
