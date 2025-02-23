@@ -46,9 +46,11 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:registrova
 Route::get('/proizvodi/pretraga', [ProizvodController::class, 'search']);
 Route::post('/pretraga-recepata', [ReceptController::class, 'searchByIngredients']);
 
+Route::get('/recepti/pretraga', [ReceptController::class, 'filterRecipes']); //Filtriranje recepata
 Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
 Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
-Route::get('/recepti/filter', [RecipeController::class, 'filterRecipes']); //Filtriranje recepata
+
+
 
 
 

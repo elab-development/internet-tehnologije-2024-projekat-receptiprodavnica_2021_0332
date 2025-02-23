@@ -7,6 +7,8 @@ use App\Models\Recept;
 use App\Models\ReceptProizvod;
 use App\Models\Proizvod;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+
 
 class ReceptController extends Controller
 {
@@ -22,20 +24,19 @@ class ReceptController extends Controller
         ], 500);
     }
 }
+     public function show($idRecepta)
+    {
+       try {
+         $recept = Recept::with('receptProizvod')->findOrFail($idRecepta);
 
-    public function show($idRecepta)
-{
-    try {
-        $recept = Recept::with('receptProizvod')->findOrFail($idRecepta);
-
-        return response()->json($recept, 200);
+         return response()->json($recept, 200);
     } catch (\Exception $e) {
-        return response()->json([
+         return response()->json([
             'message' => 'Recept nije pronađen.',
-            'error' => $e->getMessage(),
-        ], 404);
+             'error' => $e->getMessage(),
+         ], 404);
+   }
     }
-}
 
     public function store(Request $request)
 {
@@ -174,4 +175,63 @@ public function searchByIngredients(Request $request)
         ], 500);
     }
 }
+
+public function filterRecipes(Request $request)
+{
+    try {
+        $query = Recept::query();
+
+        // Filtriranje po kategoriji
+        if ($request->has('kategorija')) {
+            $query->where('kategorija', $request->input('kategorija'));
+        }
+
+        // Filtriranje po vremenu pripreme
+        if ($request->has('vreme_pripreme')) {
+            $vremePripreme = $request->input('vreme_pripreme');
+
+            if ($vremePripreme == 'do_30') {
+                $query->where('vremePripreme', '<=', 30);
+            } elseif ($vremePripreme == '30_60') {
+                $query->whereBetween('vremePripreme', [30, 60]);
+            } elseif ($vremePripreme == 'preko_60') {
+                $query->where('vremePripreme', '>', 60);
+            }
+        }
+
+        // Filtriranje po broju kalorija
+        if ($request->has('broj_kalorija')) {
+            $brojKalorija = $request->input('broj_kalorija');
+
+            if ($brojKalorija == 'Niskokalorični') {
+                $query->where('broj_kalorija', '<=', 300); // niskokalorični
+            } elseif ($brojKalorija == 'Srednjekalorični') {
+                $query->whereBetween('broj_kalorija', [301, 600]); // srednjekalorični
+            } elseif ($brojKalorija == 'Visokokalorični') {
+                $query->where('broj_kalorija', '>', 600); // visokokalorični
+            }
+        }
+
+
+        // Dobijanje filtriranih recepata
+        $recepti = $query->get();
+
+        // Ako nema rezultata, vratiti praznu listu umesto greške
+        if ($recepti->isEmpty()) {
+            return response()->json([
+                'message' => 'Nema rezultata za ove filtre.',
+                'data' => [],
+            ], 200);
+        }
+
+        return response()->json($recepti, 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Greška prilikom filtriranja recepata.',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+    }
 }
+
+
