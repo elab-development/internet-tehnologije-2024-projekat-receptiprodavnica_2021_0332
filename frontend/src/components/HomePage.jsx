@@ -7,17 +7,17 @@ const HomePage = () => {
     { 
       id: 1, 
       name: "Alfredo Chicken Pasta", 
-      image: "/images/Chicken-alfredo.jpg"
+      image: "/images/alfredo-pasta.jpg"
     },
     { 
       id: 89, 
       name: "Grčka salata", 
-      image: "/images/Grcka-salata.jpeg", 
+      image: "/images/greek.jpg", 
     },
     { 
       id: 90, 
       name: "Biftek sa maslacem od belog luka", 
-      image: "/images/Garlic-butter-steak.jpg",
+      image: "/images/steak.webp"
     },
     { 
       id: 91, 
