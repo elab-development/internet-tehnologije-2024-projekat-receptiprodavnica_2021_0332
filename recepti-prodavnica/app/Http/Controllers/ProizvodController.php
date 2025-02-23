@@ -15,11 +15,9 @@ class ProizvodController extends Controller
             'naziv' => 'required|string|max:255',
             'cena' => 'required|numeric|min:0',
             'mernaJedinica'=> 'required|string|max:255',
-            //'image' => 'required|string|max:255', // Za URL slike, koristite validaciju 'url' umesto 'string'
             'kategorija' => 'required|string|max:255',
         ]);
 
-       
         try {
             // Kreiranje proizvoda
             $proizvod = Proizvod::create([
@@ -28,14 +26,14 @@ class ProizvodController extends Controller
                 'mernaJedinica' =>$validated['mernaJedinica'],
                 'kategorija' =>$validated['kategorija'],
                 'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
             ]);
 
             return response()->json([
                 'message' => 'Uspešno kreiran proizvod!',
                 'proizvod' => $proizvod,
             ], 201);
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) {
             return response()->json([
                 'message' => 'Neuspešno kreiranje proizvoda.',
                 'error' => $e->getMessage(),
@@ -57,30 +55,18 @@ class ProizvodController extends Controller
         try {
             // Pronaći proizvod po idProizvoda
             $proizvod = Proizvod::findOrFail($idProizvoda);
-        
-
-            // Ažurirati proizvod sa novim podacima
-            // $proizvod->update([
-            //     'naziv' => $validated['naziv'],
-            //     'cena' => $validated['cena'],
-            //     'mernaJedinica' => $validated['mernaJedinica'],
-            //     'kategorija' => $validated['kategorija'],
-            // ]);
             // Ažurirati samo prisutne atribute
-        $proizvod->fill($validated);
-
-        // Sačuvati promene
-        $proizvod->save();
-
-
-
+            $proizvod->fill($validated);
+            // Sačuvati promene
+            $proizvod->save();
 
             // Uspešan odgovor
             return response()->json([
                 'message' => 'Uspešno izmenjen proizvod!',
                 'proizvod' => $proizvod,
             ], 200);
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) {
             // Greška u slučaju neuspeha
             return response()->json([
                 'message' => 'Neuspešna izmena proizvoda.',
@@ -90,20 +76,19 @@ class ProizvodController extends Controller
     }
 
     public function destroy($idProizvoda)
-{
-    try {
-        // Pronađi proizvod po ID-u
-        $proizvod = Proizvod::findOrFail($idProizvoda);
-
-        // Obrisi proizvod
-        $proizvod->delete();
+    {
+        try {
+            // Pronađi proizvod po ID-u
+            $proizvod = Proizvod::findOrFail($idProizvoda);
+            // Obrisi proizvod
+            $proizvod->delete();
 
         return response()->json([
             'message' => 'Uspešno obrisan proizvod!',
         ], 200);
-
-    } catch (\Exception $e) {
-        return response()->json([
+        } 
+        catch (\Exception $e) {
+            return response()->json([
             'message' => 'Greška prilikom brisanja proizvoda!',
             'error' => $e->getMessage(),
         ], 500);
@@ -138,10 +123,9 @@ public function search(Request $request)
 
         $query->select('idProizvoda', 'naziv', 'cena', 'mernaJedinica', 'kategorija', 'slika');
 
-         $perPage = $validated['per_page'] ?? 10;
+        $perPage = $validated['per_page'] ?? 10;
         $proizvodi = $query->paginate($perPage);
 
-       
 
         if ($proizvodi->isEmpty()) {
             return response()->json([
@@ -166,6 +150,4 @@ public function search(Request $request)
         ], 500);
     }
 }
-
-
 }

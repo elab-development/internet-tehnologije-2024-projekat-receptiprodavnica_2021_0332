@@ -17,14 +17,14 @@ const Checkout = ({resetKorpa}) => {
     e.preventDefault();
     
     // Prvo proverite da li su podaci u formi
-    console.log(formData); // Ako se podaci ne šalju pravilno, videćete ih u konzoli.
+    console.log(formData); // Ako se podaci ne šalju pravilno, videće se u konzoli
   
-    // Kada šaljete podatke na backend, proverite da li API poziv uspešno šalje podatke
+    // Provera da li API poziv uspešno šalje podatke
     fetch('http://localhost:8000/api/kupovina/potvrdi', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("token")}`, // Ako je potrebno, dodajte token
+        'Authorization': `Bearer ${localStorage.getItem("token")}`, // Ako je potrebno, dodati token
       },
       body: JSON.stringify(formData),
     })
@@ -70,8 +70,7 @@ const Checkout = ({resetKorpa}) => {
             name="imeKupca"
             value={formData.imeKupca}
             onChange={handleChange}
-            required
-          />
+            required/>
         </div>
         <div>
           <label htmlFor="prezimeKupca">Prezime: </label>
@@ -81,8 +80,7 @@ const Checkout = ({resetKorpa}) => {
             name="prezimeKupca"
             value={formData.prezimeKupca}
             onChange={handleChange}
-            required
-          />
+            required />
         </div>
         <div>
           <label htmlFor="email">Email: </label>
@@ -92,8 +90,7 @@ const Checkout = ({resetKorpa}) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            required
-          />
+            required />
         </div>
         <div>
           <label htmlFor="adresaIsporuke">Adresa: </label>
@@ -103,8 +100,7 @@ const Checkout = ({resetKorpa}) => {
             name="adresaIsporuke"
             value={formData.adresaIsporuke}
             onChange={handleChange}
-            required
-          />
+            required/>
         </div>
         <button type="submit">Potvrdi narudžbinu</button>
       </form>

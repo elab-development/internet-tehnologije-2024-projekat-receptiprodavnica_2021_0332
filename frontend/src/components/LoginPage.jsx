@@ -7,7 +7,6 @@ const LoginPage = ({setKorpa}) => {
     const [userData, setUserData] = useState({korisnickoIme:"", lozinka:""});
     const navigate = useNavigate();
 
-
     function handleInput (e){
         //console.log(e);
         let newUserData = userData;
@@ -25,7 +24,6 @@ const LoginPage = ({setKorpa}) => {
            localStorage.setItem('token', res.data.access_token);
            localStorage.removeItem('korpa');
            
-          
         // Osvežavanje korpe za novog korisnika
         fetch("http://localhost:8000/api/korpa", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -42,7 +40,6 @@ const LoginPage = ({setKorpa}) => {
             console.error("Greška prilikom učitavanja korpe", e);
             setKorpa([]);  // Ako ne možeš da učitaš korpu, postavi praznu
           });
-          
        
         navigate("/");  // Preusmeri na početnu stranicu
         window.location.reload();

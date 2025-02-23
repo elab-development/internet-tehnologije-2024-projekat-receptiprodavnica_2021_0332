@@ -52,17 +52,12 @@ return (
     {/* <div className="logo">CookMate</div> */}
     <Link to="/" className="logo">CookMate</Link>
       <ul className="nav-links">
-        <li>
-           <Link to="/">Početna</Link>
-        </li>
-        <li>
-            <Link to="/moji-sastojci">Moji sastojci</Link>
-        </li>
+        <li><Link to="/">Početna</Link></li>
+        <li><Link to="/moji-sastojci">Moji sastojci</Link></li>
         <li className="dropdown">
         <button
           className="dropdown-button"
           onClick={() => {
-          
           setTimeout(() => {
           navigate("/recepti"); // Navigiraj na stranicu sa svim receptima
           }, 300); // Kratko kašnjenje da sidebar prvo reaguje
@@ -78,9 +73,7 @@ return (
             >Proizvodi</button>
         </li>
         {isLoggedIn && (
-          <li>
-            <Link to="/korpa">Korpa ({korpa && korpa.length ? korpa.length : 0})</Link>
-          </li>
+          <li><Link to="/korpa">Korpa ({korpa && korpa.length ? korpa.length : 0})</Link></li>
         )}
         <li>
         {isLoggedIn ? (
@@ -94,41 +87,22 @@ return (
                 {/* Bočni meni */}
                 {isSidebarOpen && (
                   <div className={`sidebar open`}>
-                    <button className="close-btn" onClick={handleBackClick}>
-                      ×
-                    </button>
+                    <button className="close-btn" onClick={handleBackClick}>×</button>
           
                     {/* Kategorije proizvoda */}
                     {currentMenu === "products" && (
-                      <>
-                        <h3>Kategorije proizvoda</h3>
+                      <><h3>Kategorije proizvoda</h3>
                         <ul>
-                          <li>
-                          <button onClick={() => handleCategoryClick("voce")}>Voće</button>
-                          </li>
-                          <li>
-                          <button onClick={() =>  handleCategoryClick("mlecni-proizvodi")}>Mlečni proizvodi</button>
-                          </li>
-                          <li>
-                          <button onClick={() =>  handleCategoryClick("meso")}>Meso</button>
-                          </li>
-                          <li>
-                          <button onClick={() =>  handleCategoryClick("povrce")}>Povrće</button>
-                          </li>
-                          <li>
-                          <button onClick={() =>  handleCategoryClick("zitarice")}>Žitarice</button>
-                          </li>
-                          <li>
-                          <button onClick={() =>  handleCategoryClick("testenina")}>Testenine</button>
-                          </li>
-                          <li>
-                          <button onClick={() =>  handleCategoryClick("ulje-zacin")}>Ulja i začini</button>
-                          </li>
+                          <li><button onClick={() => handleCategoryClick("voce")}>Voće</button></li>
+                          <li><button onClick={() =>  handleCategoryClick("mlecni-proizvodi")}>Mlečni proizvodi</button></li>
+                          <li><button onClick={() =>  handleCategoryClick("meso")}>Meso</button></li>
+                          <li><button onClick={() =>  handleCategoryClick("povrce")}>Povrće</button></li>
+                          <li><button onClick={() =>  handleCategoryClick("zitarice")}>Žitarice</button></li>
+                          <li><button onClick={() =>  handleCategoryClick("testenina")}>Testenine</button></li>
+                          <li><button onClick={() =>  handleCategoryClick("ulje-zacin")}>Ulja i začini</button></li>
                         </ul>
                       </>
                     )}
-          
-                    
                   </div>
                 )}
               </>

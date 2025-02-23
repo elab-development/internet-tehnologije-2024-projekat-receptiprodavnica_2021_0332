@@ -48,6 +48,8 @@ Route::post('/pretraga-recepata', [ReceptController::class, 'searchByIngredients
 
 Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
 Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
+Route::get('/recepti/filter', [RecipeController::class, 'filterRecipes']); //Filtriranje recepata
+
 
 
 

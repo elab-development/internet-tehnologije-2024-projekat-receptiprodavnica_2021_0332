@@ -36,6 +36,7 @@ class ReceptController extends Controller
         ], 404);
     }
 }
+
     public function store(Request $request)
 {
     // Validacija podataka
@@ -138,7 +139,7 @@ public function searchByIngredients(Request $request)
 
         // Filtriranje po sastojcima
         if (!empty($sastojci)) {
-            $query->whereHas('receptProizvod', function ($subQuery) use ($sastojci) {
+            $query->whereHas('receptProizvod.proizvodi', function ($subQuery) use ($sastojci) {
                 $subQuery->whereIn('naziv', $sastojci);
             });
         }
@@ -152,6 +153,7 @@ public function searchByIngredients(Request $request)
         if (!empty($validated['brojPorcija'])) {
             $query->where('brojPorcija', '>=', $validated['brojPorcija']);
         }
+
 
         // Paginacija
         $recepti = $query->with(['receptProizvod' => function ($subQuery) {

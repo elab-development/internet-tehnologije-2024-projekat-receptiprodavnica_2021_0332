@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
   //window.location.reload();
   const popularRecipes = [
-    { 
-      id: 1, 
+    { id: 1, 
       name: "Alfredo Chicken Pasta", 
       image: "/images/alfredo-pasta.jpg"
     },
@@ -22,8 +21,7 @@ const HomePage = () => {
     { 
       id: 91, 
       name: "Čokoladni sufle", 
-      image: "/images/Souffle.jpg", 
-    }
+      image: "/images/Souffle.jpg",}
   ];
 
   const navigate = useNavigate();
@@ -48,8 +46,7 @@ const HomePage = () => {
               // Proverite sliku pre nego što je pošaljete
               navigate(`/recepti/${recipe.id}`, { state: { imageUrl: recipe.image } });
                }}
->
-  Vidi detalje
+>Vidi detalje
 </button>
             </div>
           ))}
