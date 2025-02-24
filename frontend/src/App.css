@@ -748,6 +748,8 @@ body {
   padding: 20px;
 }
 
+
+
 .recipe-box {
   border: 1px solid #ddd;
   background-color: var(--bebi-roze);
@@ -760,8 +762,22 @@ body {
   box-sizing: border-box; /* Osigurava da padding ne utiče na širinu boxa */
   height: 400px;
 }
+.recepti-box{
+  border: 1px solid #ddd;
+  background-color: var(--bordo);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 10px; /* Veći razmak između boxeva */
+  box-sizing: border-box; /* Osigurava da padding ne utiče na širinu boxa */
+  height: 400px;
+  color:var(--bela);
+}
 
-.recipe-box:hover {
+
+.recipe-box:hover, .recepti-box:hover {
   transform: scale(1.05);
 }
 
@@ -786,5 +802,69 @@ body {
   color: var(--bebi-roze);
   z-index: 100; /* Da bude iznad drugih elemenata */
 }
+
+
+.container {
+  padding: 20px;
+  background-color: var(--bebi-roze);
+  color: var(--siva);
+  border-radius: 10px;
+  width: 150%; /* ili željena vrednost, npr. 600px */
+  max-width: 1500px; 
+}
+
+h2 {
+  color: var(--bordo);
+  text-align: center;
+}
+
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap:10px;
+}
+
+input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--bordo);
+  width: 15%;
+}
+input:hover {
+  border-color: var(--tamna-bordo); /* Menja boju ivice na tamniju bordo */
+  background-color: var(--bebi-roze); /* Menja pozadinsku boju na bebi roze */
+}
+input:focus {
+  border-color: var(--tamna-bordo); /* Menja boju ivice na tamniju bordo */
+  background-color: var(--bela); /* Menja pozadinsku boju na bebi roze */
+  outline: none; /* Uklanja plavi okvir u nekim browserima */
+}
+.dodaj-sastojak {
+  padding: 8px 16px;
+  background-color: var(--bordo);
+  color: var(--bela);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pretrazi-recepte{
+  justify-content: center;
+  padding: 8px 16px;
+   width:15%; 
+  background-color: var(--bordo);
+  color: var(--bela);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pronadjeni-recepti{
+  padding-top: 20px;
+  color: var(--bordo);
+  text-align: center;
+}
+
+
 
  

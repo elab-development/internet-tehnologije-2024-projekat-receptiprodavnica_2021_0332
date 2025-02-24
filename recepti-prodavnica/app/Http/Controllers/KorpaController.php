@@ -201,32 +201,37 @@ class KorpaController extends Controller
     foreach ($nedostajuciSastojci as $sastojak) {
         $potrebnaKolicina = 1;
         $cena = $sastojak->cena ?? 0;
-
-        // Loguj podatke o sastojku
-        Log::info('Dodavanje sastojka:', [
-            'idKorpe' => $korpa->idKorpe,
-            'idProizvoda' => $sastojak->idProizvoda,
-            'kolicina' => $potrebnaKolicina,
-            'cena' => $cena
-        ]);
-
-        KorpaStavka::create([
-            'idKorpe' => $korpa->idKorpe,
-            'idProizvoda' => $sastojak->idProizvoda,
-            'kolicina' => $potrebnaKolicina,
-            'cena' => $cena
-        ]);
-
-        // Dodaj stavku u niz novog sastojka
+    
+        // Check if the product already exists in the cart
+        $existingItem = KorpaStavka::where('idKorpe', $korpa->idKorpe)
+                                    ->where('idProizvoda', $sastojak->idProizvoda)
+                                    ->first();
+    
+        if ($existingItem) {
+            // If the product is already in the cart, update the quantity
+            $existingItem->kolicina += 1;
+            $existingItem->save();
+        } else {
+            // If not, add a new item to the cart
+            KorpaStavka::create([
+                'idKorpe' => $korpa->idKorpe,
+                'idProizvoda' => $sastojak->idProizvoda,
+                'kolicina' => $potrebnaKolicina,
+                'cena' => $cena
+            ]);
+        }
+    
+        // Add item to the new list of products
         $noviSastojci[] = [
             'idProizvoda' => $sastojak->idProizvoda,
             'naziv' => $sastojak->naziv,
             'kolicina' => $potrebnaKolicina,
             'cena' => $cena
         ];
-
+    
         $ukupnaCena += $potrebnaKolicina * $cena;
     }
+    
 
     // Ažuriraj ukupnu cenu u korpi
     $korpa->ukupnaCena = $ukupnaCena;

@@ -63,7 +63,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/korpa" element={<Korpa korpa={korpa} setKorpa={setKorpa} resetKorpa={resetKorpa} />} />
         <Route path="/recepti" element={<RecipeList />} />
-        <Route path="/moji-sastojci" element={<MojiSastojci />} />
+        <Route path="/moji-sastojci" element={<MojiSastojci azurirajKorpu={azurirajKorpu} />} />
 
       </Routes>
     </BrowserRouter>
