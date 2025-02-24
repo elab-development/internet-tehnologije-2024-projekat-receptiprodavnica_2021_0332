@@ -7,6 +7,11 @@ use App\Models\Recept;
 use App\Models\Korpa;
 use App\Models\Proizvod;
 use App\Models\KorpaStavka;
+use App\Models\ReceptProizvod;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+
+
 
 class KorpaController extends Controller
 {
@@ -141,4 +146,97 @@ class KorpaController extends Controller
             'stavke' => $stavke,
         ], 200);
     }
+
+    public function dodajNedostajuceSastojke(Request $request)
+{
+    // Provera da li je korisnik prijavljen
+    if (!auth()->check()) {
+        return response()->json(['error' => 'Korisnik nije prijavljen'], 401);
+    }
+
+    // Preuzmi recept
+    $recept = Recept::findOrFail($request->idRecepta);
+   
+    // Preuzmi sve proizvode povezane sa receptom
+    $receptProizvodi = $recept->receptProizvod;
+
+    // Proveri da li je lista proizvoda prazna
+    if ($receptProizvodi->isEmpty()) {
+        return response()->json(['error' => 'Recept nema proizvode'], 400);
+    }
+
+    Log::info('Proizvodi iz recepta:', $receptProizvodi->toArray());
+
+    // Sastojci koje korisnik već ima
+    $korisnickiSastojci = $request->input('sastojci', []);
+
+    // Filtriraj sastojke koje korisnik nema
+    $nedostajuciSastojci = $receptProizvodi->filter(function ($proizvod) use ($korisnickiSastojci) {
+        return !in_array($proizvod->naziv, $korisnickiSastojci);
+    });
+
+    // Proveri da li postoje nedostajući sastojci
+    if ($nedostajuciSastojci->isEmpty()) {
+        return response()->json(['message' => 'Korisnik već ima sve sastojke'], 200);
+    }
+
+    Log::info('Nedostajući sastojci:', $nedostajuciSastojci->toArray());
+
+    // Kreiraj ili pronađi postojeću korpu
+    $korpa = Korpa::firstOrCreate(
+        ['idKorisnika' => auth()->id()],
+        ['datumKreiranja' => now(), 'ukupnaCena' => 0]
+    );
+
+    if (!$korpa->idKorpe) {
+        return response()->json(['error' => 'Greška prilikom kreiranja korpe'], 500);
+    }
+
+    // Ažuriraj ukupnu cenu pre dodavanja stavki
+    $ukupnaCena = $korpa->ukupnaCena;
+
+    $noviSastojci = [];
+
+    // Dodaj nedostajuće sastojke u korpu
+    foreach ($nedostajuciSastojci as $sastojak) {
+        $potrebnaKolicina = 1;
+        $cena = $sastojak->cena ?? 0;
+
+        // Loguj podatke o sastojku
+        Log::info('Dodavanje sastojka:', [
+            'idKorpe' => $korpa->idKorpe,
+            'idProizvoda' => $sastojak->idProizvoda,
+            'kolicina' => $potrebnaKolicina,
+            'cena' => $cena
+        ]);
+
+        KorpaStavka::create([
+            'idKorpe' => $korpa->idKorpe,
+            'idProizvoda' => $sastojak->idProizvoda,
+            'kolicina' => $potrebnaKolicina,
+            'cena' => $cena
+        ]);
+
+        // Dodaj stavku u niz novog sastojka
+        $noviSastojci[] = [
+            'idProizvoda' => $sastojak->idProizvoda,
+            'naziv' => $sastojak->naziv,
+            'kolicina' => $potrebnaKolicina,
+            'cena' => $cena
+        ];
+
+        $ukupnaCena += $potrebnaKolicina * $cena;
+    }
+
+    // Ažuriraj ukupnu cenu u korpi
+    $korpa->ukupnaCena = $ukupnaCena;
+    $korpa->save();
+
+    return response()->json([
+        'message' => 'Nedostajući sastojci su dodati u korpu!',
+        'noviSastojci' => $noviSastojci
+    ]);
 }
+
+}
+

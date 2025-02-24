@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:registrova
     Route::get('/korpa', [KorpaController::class, 'pregledKorpe']);
     
     // Ruta za dodavanje ili ažuriranje stavke u korpi
+    Route::post('/korpa/dodaj', [KorpaController::class, 'dodajNedostajuceSastojke']);
     Route::post('/korpa/{idProizvoda}', [KorpaController::class, 'dodajAzurirajStavku']);
     Route::delete('/korpa/obrisi/{idProizvoda}', [KorpaController::class, 'obrisiStavkuIzKorpe']);
     

@@ -133,15 +133,14 @@ public function searchByIngredients(Request $request)
 
     $sastojci = $validated['sastojci'] ?? [];
 
-
     try {
         // Kreiranje osnovnog query-a za recepte
         $query = Recept::query();
 
         // Filtriranje po sastojcima
         if (!empty($sastojci)) {
-            $query->whereHas('receptProizvod.proizvodi', function ($subQuery) use ($sastojci) {
-                $subQuery->whereIn('naziv', $sastojci);
+            $query->whereHas('receptProizvod', function ($subQuery) use ($sastojci) {
+                $subQuery->whereIn('proizvodi.naziv', $sastojci);  // Direktno pozivanje proizvodi.naziv
             });
         }
 
@@ -154,7 +153,6 @@ public function searchByIngredients(Request $request)
         if (!empty($validated['brojPorcija'])) {
             $query->where('brojPorcija', '>=', $validated['brojPorcija']);
         }
-
 
         // Paginacija
         $recepti = $query->with(['receptProizvod' => function ($subQuery) {

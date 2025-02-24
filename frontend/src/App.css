@@ -431,8 +431,8 @@ body {
 
 .recipe-image-details{
   margin-top: 7px;
-  width: 500px;  /* Fiksna širina */
-  height: 500px; /* Fiksna visina */
+  width: 30vw;  /* Fiksna širina */
+  height: 30vw; /* Fiksna visina */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }

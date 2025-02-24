@@ -49,6 +49,7 @@ const RecipesList = () => {
         console.log("API Response:", response.data); // Proveri šta se dobija kao odgovor
         setRecipes(response.data);
         setLoading(false);
+        setIsSidebarOpen(false); // Zatvori sidebar nakon filtriranja
       })
       .catch((error) => {
         console.error("Greška:", error);
@@ -73,9 +74,9 @@ const RecipesList = () => {
     setIsSidebarOpen(false); // Zatvori sidebar
   };
 
+  if (loading) return <p className="loading-text">Učitavanje recepta...</p>;
+  if (error) return <p>Greška: {error}</p>;
 
-  if (loading) return <p>Učitavanje recepata...</p>;
-  if (error) return <p>{error}</p>;
 
   return (
     <div className="recipes-container">

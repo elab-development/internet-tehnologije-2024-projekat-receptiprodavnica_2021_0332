@@ -9,6 +9,8 @@ import RecipeDetailsPage from './components/RecipeDetailsPage';
 import Proizvodi from './components/Proizvodi';
 import Korpa from './components/Korpa';
 import RecipeList from "./components/RecipeList";
+import MojiSastojci from "./components/MojiSastojci";
+
 
 function App() {
   const [korpa, setKorpa] = useState([]);
@@ -61,6 +63,8 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/korpa" element={<Korpa korpa={korpa} setKorpa={setKorpa} resetKorpa={resetKorpa} />} />
         <Route path="/recepti" element={<RecipeList />} />
+        <Route path="/moji-sastojci" element={<MojiSastojci />} />
+
       </Routes>
     </BrowserRouter>
   );

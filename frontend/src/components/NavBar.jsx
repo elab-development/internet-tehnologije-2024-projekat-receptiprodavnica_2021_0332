@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = ({ korpa, setKorpa, setRecipes}) => {
+const NavBar = ({ korpa, setKorpa}) => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const [isRecipesOpen, setIsRecipesOpen] = useState(false);
@@ -58,13 +58,12 @@ return (
         <button
           className="dropdown-button"
           onClick={() => {
-          setTimeout(() => {
-          navigate("/recepti"); // Navigiraj na stranicu sa svim receptima
-          }, 300); // Kratko kašnjenje da sidebar prvo reaguje
+            navigate("/recepti");
+            window.location.reload(); // Ovim osiguravaš da se resetuju podaci pri promeni stranice
           }}
-          >
+        >
           Recepti
-      </button>
+        </button>
         </li>
         <li className="dropdown">
             <button
