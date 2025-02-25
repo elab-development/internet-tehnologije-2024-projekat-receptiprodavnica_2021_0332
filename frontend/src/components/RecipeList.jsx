@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation} from "react-router-dom";
 import axios from "axios";
 
-
 const RecipesList = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState("");
@@ -11,10 +10,6 @@ const RecipesList = () => {
   const location = useLocation();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  
-
-  
 
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/recepti") // API poziv za sve recepte
@@ -58,7 +53,6 @@ const RecipesList = () => {
       });
   };
   
-
   const toggleSidebar = (menu = "") => {
     if (isSidebarOpen && currentMenu === menu) {
       setIsSidebarOpen(false); // Zatvori sidebar ako je isti meni već otvoren
@@ -76,7 +70,6 @@ const RecipesList = () => {
 
   if (loading) return <p className="loading-text">Učitavanje recepta...</p>;
   if (error) return <p>Greška: {error}</p>;
-
 
   return (
     <div className="recipes-container">

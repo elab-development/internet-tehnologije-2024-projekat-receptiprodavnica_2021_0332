@@ -62,7 +62,7 @@ const Checkout = ({resetKorpa}) => {
     <div id="checkout" className="checkout">
       <h2>Podaci za narudžbinu</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div class="form-group">
           <label htmlFor="imeKupca">Ime: </label>
           <input
             type="text"
@@ -72,7 +72,7 @@ const Checkout = ({resetKorpa}) => {
             onChange={handleChange}
             required/>
         </div>
-        <div>
+        <div class="form-group">
           <label htmlFor="prezimeKupca">Prezime: </label>
           <input
             type="text"
@@ -82,7 +82,7 @@ const Checkout = ({resetKorpa}) => {
             onChange={handleChange}
             required />
         </div>
-        <div>
+        <div class="form-group">
           <label htmlFor="email">Email: </label>
           <input
             type="email"
@@ -92,7 +92,7 @@ const Checkout = ({resetKorpa}) => {
             onChange={handleChange}
             required />
         </div>
-        <div>
+        <div class="form-group">
           <label htmlFor="adresaIsporuke">Adresa: </label>
           <input
             type="text"

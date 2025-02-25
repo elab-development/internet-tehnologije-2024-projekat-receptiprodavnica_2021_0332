@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Recept;
 use App\Models\Korpa;
@@ -10,8 +11,7 @@ use App\Models\KorpaStavka;
 use App\Models\ReceptProizvod;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
-
-
+use Normalizer;
 
 class KorpaController extends Controller
 {
@@ -98,8 +98,6 @@ class KorpaController extends Controller
 
     return response()->json(['message' => 'Korpa je uspešno ažurirana!', 'stavka' => $stavka], 200);
 }
-
-
     // Generisanje korpe prema receptu
     public function generateCart($idRecepta, Request $request)
     {
@@ -148,7 +146,7 @@ class KorpaController extends Controller
     }
 
     public function dodajNedostajuceSastojke(Request $request)
-{
+    {
     // Provera da li je korisnik prijavljen
     if (!auth()->check()) {
         return response()->json(['error' => 'Korisnik nije prijavljen'], 401);
@@ -167,12 +165,14 @@ class KorpaController extends Controller
 
     Log::info('Proizvodi iz recepta:', $receptProizvodi->toArray());
 
-    // Sastojci koje korisnik već ima
-    $korisnickiSastojci = $request->input('sastojci', []);
+    // Sastojci koje korisnik već ima (normalizovani)
+    $korisnickiSastojci = array_map(function ($sastojak) {
+        return $this->normalizeString($sastojak);
+    }, $request->input('sastojci', []));
 
-    // Filtriraj sastojke koje korisnik nema
+    // Filtriraj sastojke koje korisnik nema (takođe normalizovani)
     $nedostajuciSastojci = $receptProizvodi->filter(function ($proizvod) use ($korisnickiSastojci) {
-        return !in_array($proizvod->naziv, $korisnickiSastojci);
+        return !in_array($this->normalizeString($proizvod->naziv), $korisnickiSastojci);
     });
 
     // Proveri da li postoje nedostajući sastojci
@@ -202,17 +202,17 @@ class KorpaController extends Controller
         $potrebnaKolicina = 1;
         $cena = $sastojak->cena ?? 0;
     
-        // Check if the product already exists in the cart
+        // Provera da li proizvod već postoji u korpi
         $existingItem = KorpaStavka::where('idKorpe', $korpa->idKorpe)
                                     ->where('idProizvoda', $sastojak->idProizvoda)
                                     ->first();
     
         if ($existingItem) {
-            // If the product is already in the cart, update the quantity
+            // Ako je proizvod već u korpi, povećaj količinu
             $existingItem->kolicina += 1;
             $existingItem->save();
         } else {
-            // If not, add a new item to the cart
+            // Ako nije, dodaj novi proizvod u korpu
             KorpaStavka::create([
                 'idKorpe' => $korpa->idKorpe,
                 'idProizvoda' => $sastojak->idProizvoda,
@@ -221,7 +221,7 @@ class KorpaController extends Controller
             ]);
         }
     
-        // Add item to the new list of products
+        // Dodaj sastojak u listu novih sastojaka
         $noviSastojci[] = [
             'idProizvoda' => $sastojak->idProizvoda,
             'naziv' => $sastojak->naziv,
@@ -232,7 +232,6 @@ class KorpaController extends Controller
         $ukupnaCena += $potrebnaKolicina * $cena;
     }
     
-
     // Ažuriraj ukupnu cenu u korpi
     $korpa->ukupnaCena = $ukupnaCena;
     $korpa->save();
@@ -242,6 +241,14 @@ class KorpaController extends Controller
         'noviSastojci' => $noviSastojci
     ]);
 }
-
+/**
+ * Normalizuje string: uklanja razliku između velikih/malih slova i latiničnih/slovnih varijacija (šđčćž -> sdcxz).
+ */
+private function normalizeString($string)
+{
+    $string = mb_strtolower($string); // Ignoriše velika/mala slova
+    $string = Normalizer::normalize($string, Normalizer::FORM_D); // Konvertuje specijalna slova
+    $string = preg_replace('/\pM/u', '', $string); // Uklanja diakritičke znakove (ć -> c, š -> s)
+    return $string;
 }
-
+}

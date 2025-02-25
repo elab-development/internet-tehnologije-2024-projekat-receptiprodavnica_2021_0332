@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('recepti', function (Blueprint $table) {
-            //$table->dropColumn('tip');
+        Schema::table('recepti_proizvodi', function (Blueprint $table) {
+            $table->integer('potrebnaKolicina')->default(1);
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('recepti', function (Blueprint $table) {
+        Schema::table('recepti_proizvodi', function (Blueprint $table) {
             //
         });
     }

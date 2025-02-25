@@ -157,7 +157,7 @@ public function searchByIngredients(Request $request)
         // Paginacija
         $recepti = $query->with(['receptProizvod' => function ($subQuery) {
             $subQuery->select('naziv', 'mernaJedinica');
-        }])->paginate(10); // 10 rezultata po stranici
+        }])->paginate(9); // 9 rezultata po stranici
 
         // Provera da li ima rezultata
         if ($recepti->isEmpty()) {
