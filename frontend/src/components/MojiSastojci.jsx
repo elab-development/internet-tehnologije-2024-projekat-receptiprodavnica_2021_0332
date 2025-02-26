@@ -11,7 +11,8 @@ const MojiSastojci = ({ azurirajKorpu }) => {
     return JSON.parse(sessionStorage.getItem("recepti")) || [];
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Za prikaz grešaka
+  const [successMessage, setSuccessMessage] = useState(""); // Za prikaz uspešnih poruka
   const [korpa, setKorpa] = useState([]);
   const token = localStorage.getItem("token");
   const location = useLocation();
@@ -35,22 +36,35 @@ const MojiSastojci = ({ azurirajKorpu }) => {
 
   const handlePretraziRecepte = async () => {
     setLoading(true);
-    setError("");
-
+    setErrorMessage("");
+    setSuccessMessage("");
+    setRecepti([]); // Resetujemo listu recepata pre nove pretrage
+  
     try {
-      const response = await axios.post("http://localhost:8000/api/pretraga-recepata", {
-        sastojci,
-      });
-
+      const response = await axios.post("http://localhost:8000/api/pretraga-recepata", { sastojci });
+  
       setRecepti(response.data.data);
     } catch (error) {
-      setError("Nema recepata za ove sastojke.");
+      console.error(error.response ? error.response.data : error.message);
+  
+      if (error.response && error.response.status === 404) {
+        setErrorMessage("Nema recepata za ove sastojke.");
+      } else {
+        setErrorMessage("Došlo je do greške pri pretrazi recepata.");
+      }
+  
+      setRecepti([]); // Brišemo stare rezultate
     }
-
+  
     setLoading(false);
   };
+  
+  
 
   const handleDodajUKorpu = async (idRecepta) => {
+    setErrorMessage("");
+    setSuccessMessage(""); // Resetujemo poruke pre novog pokušaja
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/korpa/dodaj",
@@ -62,7 +76,7 @@ const MojiSastojci = ({ azurirajKorpu }) => {
 
       if (!response.data || !response.data.noviSastojci) {
         console.error("Greška: Odgovor sa servera ne sadrži 'noviSastojci'.", response.data);
-        alert("Došlo je do greške pri dodavanju sastojaka u korpu.");
+        setErrorMessage("Došlo je do greške pri dodavanju sastojaka u korpu.");
         return;
       }
 
@@ -84,18 +98,20 @@ const MojiSastojci = ({ azurirajKorpu }) => {
         return updatedKorpa;
       });
 
-      console.log("Ažurirana korpa:", korpa);
-
       if (azurirajKorpu) {
         await azurirajKorpu();
       } else {
         console.warn("azurirajKorpu nije definisana!");
       }
 
-      alert(response.data.message);
+      // Postavljanje poruke o uspehu
+      setSuccessMessage(response.data.message || "Sastojci su uspešno dodati u korpu!");
+
+      // Automatsko uklanjanje poruke nakon 3 sekunde
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Greška pri dodavanju u korpu:", error);
-      alert("Došlo je do greške pri dodavanju sastojaka u korpu.");
+      setErrorMessage("Došlo je do greške pri dodavanju sastojaka u korpu.");
     }
   };
 
@@ -108,7 +124,8 @@ const MojiSastojci = ({ azurirajKorpu }) => {
           type="text"
           value={noviSastojak}
           onChange={(e) => setNoviSastojak(e.target.value)}
-          placeholder="Unesite sastojak..."/>
+          placeholder="Unesite sastojak..."
+        />
         <button className="dodaj-sastojak" onClick={handleDodajSastojak}>Dodaj</button>
         <button className="pretrazi-recepte" onClick={handlePretraziRecepte} disabled={loading}>
           {loading ? "Pretražujem..." : "Prikaži recepte"}
@@ -126,7 +143,9 @@ const MojiSastojci = ({ azurirajKorpu }) => {
         ))}
       </ul>
 
-      {error && <p className="error">{error}</p>}
+      {/* Prikaz poruka */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {successMessage && <p className="success-message">{successMessage}</p>}
 
       {recepti.length > 0 && (
         <div>
@@ -155,7 +174,9 @@ const MojiSastojci = ({ azurirajKorpu }) => {
                       e.stopPropagation();
                       handleDodajUKorpu(recept.idRecepta);
                     }}
-                  >Dodaj nedostajuće u korpu</button>
+                  >
+                    Dodaj nedostajuće u korpu
+                  </button>
                 </div>
               ))}
             </div>

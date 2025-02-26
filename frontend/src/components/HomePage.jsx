@@ -30,6 +30,12 @@ const HomePage = () => {
     <div className="home-container">
       <header className="header">
         <h1 className="app-title">COOKMATE</h1>
+        <button 
+          className="sastojci-button"
+          onClick={() => navigate("/moji-sastojci")}
+        >
+          MOJI SASTOJCI
+        </button>
       </header>
 
       <section className="popular-recipes">

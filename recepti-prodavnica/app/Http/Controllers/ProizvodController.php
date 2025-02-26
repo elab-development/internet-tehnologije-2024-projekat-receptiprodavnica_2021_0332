@@ -8,6 +8,20 @@ use Illuminate\Support\Facades\Validator;
 
 class ProizvodController extends Controller
 {
+    public function index()
+    {
+        try{
+            $proizvodi = Proizvod::paginate(10); // 10 proizvoda po stranici
+
+            return response()->json($proizvodi);
+
+        }catch(\Exception $e){
+            return response()->json([
+               'message' => 'Greška prilikom prikazivanja proizvoda!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     public function store(Request $request)
     {
         // Validacija podataka

@@ -5,20 +5,11 @@ import { useNavigate } from "react-router-dom";
 const NavBar = ({ korpa, setKorpa}) => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  // const [isRecipesOpen, setIsRecipesOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState(""); // Praćenje trenutnog menija
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Prati stanje korisnika
   const navigate = useNavigate();
 
-  const toggleSidebar = (menu = "") => {
-    if (isSidebarOpen && currentMenu === menu) {
-      setIsSidebarOpen(false); // Zatvori sidebar ako je isti meni već otvoren
-      setCurrentMenu("");
-    } else {
-      setIsSidebarOpen(true); // Otvori sidebar i postavi trenutni meni
-      setCurrentMenu(menu);
-    }
-  };
+ 
   const handleBackClick = () => {
     setCurrentMenu(""); // Povratak na glavni meni
     setIsSidebarOpen(false); // Zatvori sidebar
@@ -68,7 +59,7 @@ return (
         <li className="dropdown">
             <button
               className="dropdown-button"
-              onClick={() => toggleSidebar("products")}
+              onClick={() => navigate("/proizvodi")}
             >Proizvodi</button>
         </li>
         {isLoggedIn && (

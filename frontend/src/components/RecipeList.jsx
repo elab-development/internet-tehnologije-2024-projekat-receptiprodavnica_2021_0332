@@ -137,18 +137,24 @@ const RecipesList = () => {
           )}
         </div>
       )}
-      {recipes.map((recipe) => (
+      {Array.isArray(recipes) && recipes.length > 0 ? (
+        recipes.map((recipe) => (
         <div
-          key={recipe.idRecepta}
-          className="recipe-box"
-          onClick={() => navigate(`/recepti/${recipe.idRecepta}`, { state: { from: location.pathname, imageUrl: recipe.slika } })}
-        ><img src={`http://127.0.0.1:8000/storage/${recipe.slika}`} alt={recipe.naziv} className="recipe-list-image" />
-          <h3>{recipe.naziv}</h3>
-          <p><i class="fa-regular fa-clock"></i>  {recipe.vremePripreme} min</p>
-        </div>
-      ))}
-    </div>
-  );
-};
+        key={recipe.idRecepta}
+        className="recipe-box"
+        onClick={() => navigate(`/recepti/${recipe.idRecepta}`, { state: { from: location.pathname, imageUrl: recipe.slika } })}
+        >
+        <img src={`http://127.0.0.1:8000/storage/${recipe.slika}`} alt={recipe.naziv} className="recipe-list-image" />
+        <h3>{recipe.naziv}</h3>
+        <p><i className="fa-regular fa-clock"></i> {recipe.vremePripreme} min</p>
+       </div>
+       ))
+        ) : (
+       <p className="no-recipes-message">Nema recepata za ovu kategoriju.</p>
+      )}
+
+      </div>
+      );
+      };
 
 export default RecipesList;

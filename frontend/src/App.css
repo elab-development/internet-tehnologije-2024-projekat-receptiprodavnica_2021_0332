@@ -27,6 +27,7 @@ body {
 .header {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
   background-color: var(--bordo);
@@ -720,6 +721,7 @@ body {
 
 .checkout button:hover {
   background-color: var(--tamno-bordo);
+  color: var(--tamna-siva);
 }
 
 .paginacija {
@@ -888,4 +890,41 @@ input:focus {
   bottom: 15px; /* Odmaknuto od donje ivice */
   left: 50%; /* Centriraj dugme horizontalno */
   transform: translateX(-50%); /* Pomeri ga za polovinu njegove širine ka levoj strani */
+}
+.success-message, .error-message{
+  color: var(--tamna-siva);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  text-align: center;
+}
+.no-recipes-message{
+  color: var(--bebi-roze);
+  text-align: center;
+  margin-top: 20px;
+  grid-column: span 3; /* Omogućava da poruka zauzme celu širinu */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.sastojci-button {
+  background-color: var(--bebi-roze);
+  color: var(--bordo);
+  border: none;
+  padding: 12px 24px;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif; /* Dodajemo font */
+  font-weight: 600; /* Bold za lepši izgled */
+  text-transform: uppercase; /* Ako želiš da sve bude velikim slovima */
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.sastojci-button:hover {
+  background-color: var(--tamna-bordo);
+  color: var(--bebi-roze)
 }
