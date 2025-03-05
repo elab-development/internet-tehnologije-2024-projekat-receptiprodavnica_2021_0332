@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Proizvodi = ({ azurirajKorpu }) => {
@@ -11,8 +11,7 @@ const Proizvodi = ({ azurirajKorpu }) => {
   const [ukupnoStranica, setUkupnoStranica] = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentMenu, setCurrentMenu] = useState("");
-  
-  const location = useLocation(); 
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   
   // Koristi useSearchParams da pročitaš query parametre
@@ -20,29 +19,29 @@ const Proizvodi = ({ azurirajKorpu }) => {
   const kategorija = searchParams.get("kategorija");
 
   useEffect(() => {
+    setProizvodi([]); // Resetuje proizvode pre novog učitavanja
+    setLoading(true);
+  
     const fetchData = async () => {
-      console.log("Kategorija: ", kategorija); 
       try {
-        const url = kategorija ? 
-          `http://127.0.0.1:8000/api/proizvodi/pretraga?kategorija=${kategorija}&page=${trenutnaStranica}` : 
-          `http://127.0.0.1:8000/api/proizvodi?page=${trenutnaStranica}`;
+        const url = kategorija
+          ? `http://127.0.0.1:8000/api/proizvodi/pretraga?kategorija=${kategorija}&page=${trenutnaStranica}`
+          : `http://127.0.0.1:8000/api/proizvodi?page=${trenutnaStranica}`;
+  
         const response = await axios.get(url);
-        console.log("API odgovor: ", response.data); 
-        if (response.data && response.data.data) {
-          setProizvodi(response.data.data); // Ažuriraj proizvode sa ispravnim podacima
-          setUkupnoStranica(response.data.last_page);
-        } else {
-          console.error("Nema podataka za proizvode!");
-        }
+        setProizvodi(response.data?.data || []);
+        setUkupnoStranica(response.data.last_page);
       } catch (error) {
         console.error("Greška:", error);
         setGreska("Neuspešno učitavanje proizvoda");
+      } finally {
+        setLoading(false);
       }
     };
   
     fetchData();
   }, [kategorija, trenutnaStranica]);
-   // Dodaj 'kategorija' kao zavisnost
+  
 
   const promeniStranicu = (novaStranica) => {
     if (novaStranica >= 1 && novaStranica <= ukupnoStranica) {
@@ -66,9 +65,15 @@ const Proizvodi = ({ azurirajKorpu }) => {
   };
 
   const handleCategoryClick = (kategorija) => {
+    setTrenutnaStranica(1); 
     navigate(`/proizvodi/pretraga?kategorija=${kategorija}`);  // Navigacija do odgovarajuće kategorije
     setIsSidebarOpen(false);  // Zatvori sidebar nakon što se odabere kategorija
   };
+
+  const handleOpenModal = (proizvod) => {
+    setModal(proizvod);
+  };
+  
 
   const dodajUKorpu = async () => {
     if (!localStorage.getItem("token")) {
@@ -76,27 +81,34 @@ const Proizvodi = ({ azurirajKorpu }) => {
       return;
     }
     if (!modal) return;
+  
     try {
+  
       const response = await fetch(`http://localhost:8000/api/korpa/${modal.idProizvoda}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
-        body: JSON.stringify({ kolicina }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({ kolicina })
       });
   
-      const data = await response.json(); // Pretvori odgovor u JSON
+      const data = await response.json();
       if (response.ok) {
-        azurirajKorpu(); // Ažuriraj korpu
+        azurirajKorpu(); // Ažuriraj korpu odmah
         setModal(null);
-        setKolicina(1); // Resetuj količinu na 1
+        setKolicina(1);
+        setGreska(""); // Resetuj grešku
       } else {
-        console.error(data.message); // Ako nije ok, prikaži grešku
-        setGreska(data.message);
+        setGreska(data.message || "Greška pri dodavanju u korpu");
       }
     } catch (error) {
-      console.error("Greška pri dodavanju u korpu", error);
+      console.error("Greška pri dodavanju u korpu:", error);
       setGreska("Greška pri dodavanju u korpu");
     }
   };
+  
+  if (loading) return <p className="loading-text">Učitavanje proizvoda...</p>;
 
   return (
     <section className="proizvodi-section">
@@ -139,7 +151,7 @@ const Proizvodi = ({ azurirajKorpu }) => {
         />
         <h3 className="proizvodi-name">{proizvod.naziv}</h3>
         <p className="proizvodi-description">{proizvod.cena} RSD/{proizvod.mernaJedinica}</p>
-        <button className="buy-button" onClick={() => setModal(proizvod)}>
+        <button className="buy-button" onClick={() => handleOpenModal(proizvod)}>
           Dodaj u korpu
         </button>
       </div>

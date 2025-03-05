@@ -891,7 +891,7 @@ input:focus {
   left: 50%; /* Centriraj dugme horizontalno */
   transform: translateX(-50%); /* Pomeri ga za polovinu njegove širine ka levoj strani */
 }
-.success-message, .error-message{
+.success-message, .error-message, .potvrda-kupovine{
   color: var(--tamna-siva);
   padding: 10px;
   border-radius: 5px;
@@ -927,4 +927,25 @@ input:focus {
 .sastojci-button:hover {
   background-color: var(--tamna-bordo);
   color: var(--bebi-roze)
+}
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap:10px;
+}
+
+.search-input {
+  padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--bordo);
+    width: 15%;
+}
+.search-button{
+  padding: 8px 16px;
+    background-color: var(--bebi-roze);
+    color: var(--tamna-siva);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

@@ -105,7 +105,7 @@ const Checkout = ({resetKorpa}) => {
         <button type="submit">Potvrdi narudžbinu</button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p class= "potvrda-kupovine">{message}</p>}
     </div>
   );
 };

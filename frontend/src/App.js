@@ -58,7 +58,7 @@ function App() {
       <Route path="/" element={<HomePage />} /> 
       <Route path="/recepti/:id" element={<RecipeDetailsPage />} />
       <Route path="/proizvodi" element={<Proizvodi azurirajKorpu={azurirajKorpu} />} />
-      <Route path="/proizvodi/pretraga" element={<Proizvodi />} /> 
+      <Route path="/proizvodi/pretraga" element={<Proizvodi azurirajKorpu={azurirajKorpu} />} /> 
         <Route path="/" element={<HomePage />} /> 
         <Route path="/login" element={<LoginPage setKorpa={setKorpa}/>} />
         <Route path="/register" element={<RegisterPage />} />

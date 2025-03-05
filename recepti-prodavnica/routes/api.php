@@ -51,11 +51,3 @@ Route::get('/proizvodi', [ProizvodController::class, 'index']);
 Route::get('/recepti/pretraga', [ReceptController::class, 'filterRecipes']); //Filtriranje recepata
 Route::get('/recepti/{id}', [ReceptController::class, 'show']);//Prikaz pojedinacnog recepta
 Route::get('/recepti', [ReceptController::class, 'index']);// Prikaz svih recepata
-
-
-
-
-
-
-
-
