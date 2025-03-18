@@ -148,14 +148,12 @@ public function search(Request $request)
         }
         
         $proizvodi->getCollection()->transform(function ($proizvod) {
-            $proizvod->slika = asset('storage/' . $proizvod->slika); // Pretvaranje putanje u pun URL
+            // Vraća samo relativnu putanju slike, bez punog URL-a
             return $proizvod;
         });
 
 
-        return response()->json([
-            'proizvodi' => $proizvodi,
-        ], 200);
+        return response()->json($proizvodi, 200);
 
     } catch (\Exception $e) {
         return response()->json([

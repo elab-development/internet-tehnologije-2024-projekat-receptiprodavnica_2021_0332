@@ -59,8 +59,13 @@ return (
         <li className="dropdown">
             <button
               className="dropdown-button"
-              onClick={() => navigate("/proizvodi")}
-            >Proizvodi</button>
+              onClick={() => {
+                navigate("/proizvodi");
+                window.location.reload(); // Ovo će osvežiti stranicu i resetovati pretragu
+              }}
+            >
+              
+            Proizvodi</button>
         </li>
         {isLoggedIn && (
           <li><Link to="/korpa">Korpa ({korpa && korpa.length ? korpa.length : 0})</Link></li>
